@@ -3,7 +3,7 @@
 
 These functions are deliberately thin and production-facing:
   * credit_gate -> live Butterbase consume_credit when strict=True
-  * extract_claims_openrouter -> OpenRouter only, no regex fallback
+  * extract_claims_runtime -> same extractor used by /verify direct path
   * score_http -> POST {SCORER_URL}/score, not in-process scorer
 
 They are importable both from `pipeline/graphjudge.pipe` custom Python steps and
@@ -21,7 +21,7 @@ from typing import Any, Callable
 import jsonschema
 
 from pipeline.credits import consume_credit, persist_result
-from pipeline.extract_claims import call_model_llm, load_schema
+from pipeline.extract_claims import extract_claims
 
 VERDICT_SCHEMA = Path(__file__).resolve().parent / "schemas" / "verdict.schema.json"
 
@@ -110,13 +110,16 @@ def credit_gate(
     return consume_credit(user_id, job_id, bearer=bearer, strict=_as_bool(strict))
 
 
-def extract_claims_openrouter(job_id: str, text: str, validate: bool = True) -> dict[str, Any]:
-    """Extract section 4.1 claims through OpenRouter only."""
-    parsed = json.loads(call_model_llm(text))
-    payload = {"job_id": job_id, "claims": parsed.get("claims", parsed if isinstance(parsed, list) else [])}
-    if _as_bool(validate):
-        jsonschema.validate(payload, load_schema())
-    return payload
+def extract_claims_runtime(job_id: str, text: str, validate: bool = True) -> dict[str, Any]:
+    """Extract section 4.1 claims with the same behavior as the direct /verify path.
+
+    `extract_claims()` uses OpenRouter when configured, then falls back to the
+    deterministic personal-domain extractor when the model fails or returns no
+    claims for a template-shaped sentence. Keeping RocketRide on this helper
+    prevents demo drift such as `Corwin Mavik manages XXXX.` producing an empty
+    graph only on the RocketRide path.
+    """
+    return extract_claims(job_id, text, validate=_as_bool(validate))
 
 
 def score_http(job_id: str, claims: list[dict[str, Any]], scorer_url: str | None = None) -> dict[str, Any]:
@@ -160,8 +163,8 @@ def run_production_steps(
     if not gate.get("ok"):
         raise RuntimeError(f"consume_credit denied the run: balance={gate.get('balance', 0)}")
 
-    log("extract_claims.start", backend="OpenRouter")
-    claims_payload = extract_claims_openrouter(job_id, text, validate=True)
+    log("extract_claims.start", backend="OpenRouter+deterministic-fallback")
+    claims_payload = extract_claims_runtime(job_id, text, validate=True)
     log("extract_claims.done", claims=len(claims_payload["claims"]))
 
     log("score.start", scorer_url_set=bool(os.environ.get("SCORER_URL")))

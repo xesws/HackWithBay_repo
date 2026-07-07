@@ -76,6 +76,7 @@ _PATTERNS: list[tuple[re.Pattern[str], str, str, bool]] = [
     (re.compile(r"^(?P<s>.+?) joined in (?P<o>.+)$"), "relational", "joined_in", False),
     (re.compile(r"^(?P<s>.+?) was born in (?P<o>.+)$"), "relational", "born_in", False),
     (re.compile(r"^(?P<s>.+?) leads (?P<o>.+)$"), "relational", "leads_project", False),
+    (re.compile(r"^(?P<s>.+?) is (?:a|an|the) (?P<o>.+)$"), "relational", "is_a", False),
 ]
 
 

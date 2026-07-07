@@ -29,11 +29,12 @@ leads_project
 owns_pet
 joined_in
 born_in
+is_a
 ```
 
 Every claim in this domain is **relational** (`kind":"relational"` with `rel` +
 `object`). There are NO attribute claims. If an assertion does not map to one of
-these 8 predicates, DROP it. Never emit a predicate spelled any other way.
+these predicates, DROP it. Never emit a predicate spelled any other way.
 
 ## Surface → triple mapping (inverse of the benchmark sentence templates)
 
@@ -49,6 +50,7 @@ these 8 predicates, DROP it. Never emit a predicate spelled any other way.
 | `{S} owns a pet named {O}.`               | `owns_pet`      | pet name                       |
 | `{S} joined in {O}.`                      | `joined_in`     | year, as a string ("2022")     |
 | `{S} was born in {O}.`                    | `born_in`       | year, as a string ("1992")     |
+| `{S} is a/an/the {O}.`                    | `is_a`          | role/type label (e.g. "student") |
 
 ## Rules
 
