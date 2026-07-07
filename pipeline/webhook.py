@@ -5,10 +5,16 @@ POST /  body: {"user_id": "...", "job_id": "...", "text": "..."}
     -> credit gate -> extract §4.1 claims -> score -> respond §4.2 (passed through).
     -> on insufficient credits: {"error": "insufficient_credits", "balance": 0}.
 
-Fully OFFLINE by default:
-  * credit_gate()          = in-memory stub  (SEAM -> C2 consume_credit)
-  * extraction             = deterministic regex inverse of sentence_for (no LLM)
-  * scoring                = mock_scorer.mock_score_claims (SEAM -> A3 scorer)
+B3-real: both seams call the real backends when configured, and degrade OFFLINE:
+  * credit_gate  -> pipeline.credits.consume_credit  (Track C §4.5 fn when
+                    CONSUME_CREDIT_URL is set; in-memory stub otherwise)
+  * scoring      -> POST {SCORER_URL}/score  (real Track A scorer §4.3 when
+                    SCORER_URL is set; mock_scorer.mock_score_claims otherwise)
+  * extraction   -> deterministic regex inverse of sentence_for (no LLM key)
+
+NOTE: Shape 2 (the shipped product API) is scorer/verify.py's `POST /verify`.
+This standalone webhook (Shape 1) is kept as an offline-friendly harness / the
+alternate single-purpose deployment; it shares the credit seam with /verify.
 
 Run:  uvicorn pipeline.webhook:app --host 127.0.0.1 --port 8080
 """
@@ -24,15 +30,11 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
+from pipeline.credits import consume_credit
 from pipeline.extract_claims import extract_claims
 from pipeline.mock_scorer import mock_score_claims
 
 app = FastAPI(title="GraphJudge pipeline webhook", version="0.1-skeleton")
-
-# in-memory credit stub: default users have plenty; these are treated as broke so
-# the zero-credit path is exercisable offline. (SEAM: replaced by C2 below.)
-_STUB_DEFAULT_BALANCE = 100
-_STUB_BROKE_USERS = {"u_nocredit", "u_broke"}
 
 
 class JobRequest(BaseModel):
@@ -41,17 +43,14 @@ class JobRequest(BaseModel):
     text: str
 
 
-# --- SEAM: credit gate ---------------------------------------------------------
-def credit_gate(user_id: str) -> dict[str, Any]:
-    """Stub for Track C `consume_credit(user_id, job_id)` (contracts §4.5).
+# --- SEAM: credit gate (B3-real -> pipeline.credits.consume_credit) ------------
+def credit_gate(user_id: str, job_id: str) -> dict[str, Any]:
+    """Consume one credit (contracts §4.5).
 
-    Real version: single-transaction call to Butterbase `consume_credit` that
-    inserts delta=-1 when balance>0 and returns {"ok": bool, "balance": int}.
-    Here: an in-memory heuristic so the chain runs with no backend.
+    Delegates to pipeline.credits.consume_credit: the real Butterbase fn when
+    CONSUME_CREDIT_URL is set, else an in-memory stub so the chain runs offline.
     """
-    if user_id in _STUB_BROKE_USERS:
-        return {"ok": False, "balance": 0}
-    return {"ok": True, "balance": _STUB_DEFAULT_BALANCE}
+    return consume_credit(user_id, job_id)
 
 
 # --- SEAM: scorer --------------------------------------------------------------
@@ -77,7 +76,7 @@ def score(job_id: str, claims: list[dict[str, Any]]) -> dict[str, Any]:
 
 @app.post("/")
 def handle(req: JobRequest) -> JSONResponse:
-    gate = credit_gate(req.user_id)
+    gate = credit_gate(req.user_id, req.job_id)
     if not gate.get("ok"):
         return JSONResponse({"error": "insufficient_credits", "balance": gate.get("balance", 0)})
 
@@ -88,4 +87,8 @@ def handle(req: JobRequest) -> JSONResponse:
 
 @app.get("/healthz")
 def healthz() -> dict[str, Any]:
-    return {"ok": True, "scorer": "live" if os.environ.get("SCORER_URL") else "mock"}
+    return {
+        "ok": True,
+        "scorer": "live" if os.environ.get("SCORER_URL") else "mock",
+        "credit_backend": "live" if os.environ.get("CONSUME_CREDIT_URL") else "stub",
+    }
