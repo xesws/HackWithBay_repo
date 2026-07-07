@@ -11,7 +11,7 @@
       ｜验证：dashboard 里能看到 database/auth 控制台
 - [ ] **Butterbase credits**：workshop 上问到的兑码结果落实；若仍是 $0 → 直接启用 R8（直连 key），别再耗时间
       ｜验证：AI models 页发一条测试请求，或直连 key 就绪
-- [ ] **RocketRide**：VS Code extension 装好；cloud.rocketride.ai 账号注册并在 extension 里登录
+- [ ] **RocketRide**：VS Code extension 装好（open-vsx.org/extension/RocketRide/rocketride）；**cloud 账号不再需要**（官方确认 cloud 故障、要求已调整为本地即可，见 §4）；pod 上 `pip install rocketride rocketride-mcp` 备用
       ｜验证：extension 内能看到 deploy 目标
 - [ ] **直连 API keys（R8 兜底）**：`ANTHROPIC_API_KEY` / `OPENAI_API_KEY` 至少一个进 `.env`
       ｜验证：一条最小 completion 请求返回 200
@@ -68,13 +68,17 @@ neo4j/bin/neo4j start && sleep 15
       ｜验证：`python -c "import fastapi, neo4j, pandas; print('ok')"`
 - [ ] `node -v`（SPA 用；没有就 `brew install node`）
 
-## 4. RocketRide 冒烟（与 Track B 的 B1 同一件事，10 min）
+## 4. RocketRide 冒烟（与 Track B 的 B1 同一件事，15 min）
 
-- [ ] extension 里建最小 pipeline（chat/webhook source → 一个 LLM 节点 → respond）
-- [ ] 本地跑通一次
-- [ ] **一键部署到 cloud.rocketride.ai** —— 今天全场最不可预测的一步，务必在发 kickoff 前趟完
-      ｜验证：`curl -X POST <endpoint>` 返回 200；把 URL 形态记进 `.env` 的 `PIPELINE_WEBHOOK_URL` 注释
-- [ ] 卡住 >15 分钟 → 立刻抓 mentor（产品 3 周新，他们自己人就在场，这是最快解法）
+> 📣 **要求已官方调整（存证！）**：RocketRide Cloud 今日故障，sponsor 在 Discord 明确 "the local option should be good for today's hack" / "we adjust the requirement"。**把这两条 Discord 原文（Krish Garg 11:42、Joe Maionchi 11:47）截图/粘贴进 `docs/decisions.md` 作为裁决 #0**——这是评审时"为什么没上 Cloud"的官方receipt，README 里也写一句。
+
+- [ ] extension 里建最小 pipeline（chat/webhook source → 一个 LLM 节点 → respond），本地跑通一次
+- [ ] **pod 上自托管 runtime**：`pip install rocketride`，按 docs.rocketride.org 的 Python SDK / server 文档起本地 runtime（agent 花 5 分钟读 /develop/python），把同一个 .pipe 在 pod 上执行成功——**.pipe 的可移植性由我们替他们证明，这是 pitch 素材**
+      ｜验证：pod 上执行 hello-world .pipe 成功返回
+- [ ] 对外接线二选一（决策规则）：
+      **Shape 1**（pod 还没租 / 端口可加）：runtime 作为独立服务监听 8080，模板暴露 8080 → `PIPELINE_WEBHOOK_URL=https://<POD_ID>-8080.proxy.runpod.net`
+      **Shape 2**（pod 已租且不想重启加端口）：scorer 的 FastAPI 加一个 `/verify` 路由，进程内经 rocketride Python SDK 触发 pipeline → 只用现有 8000 端口，`PIPELINE_WEBHOOK_URL=<SCORER_URL>/verify`
+- [ ] 卡住 >15 分钟 → 抓 mentor（RocketRide 的人就在场，Krish/Joe 在 Discord 上活跃）
 
 ## 5. Butterbase 连通性（5 min）
 
@@ -88,7 +92,7 @@ neo4j/bin/neo4j start && sleep 15
 
 - [ ] `CALL gds.version()` 返回 ✅
 - [ ] runpod proxy 已验证（http.server 8000 测试 curl 通），`SCORER_URL` 定型 ✅
-- [ ] RocketRide cloud endpoint curl 200 ✅
+- [ ] RocketRide runtime 在 pod 上执行 .pipe 成功；Discord 裁决已存证 decisions.md ✅
 - [ ] Butterbase 读写一次成功，keys 在 `.env` ✅
 - [ ] LLM 调用通（gateway 或直连，二选一即可）✅
 - [ ] docs 树就位，contracts.md 冻结 ✅
@@ -119,7 +123,8 @@ OPENAI_API_KEY=             # R8 兜底
 |---|---|---|
 | `gds.version()` 报 unknown procedure | GDS jar 没进 plugins/ 或版本不配 | 确认 jar 在 `/workspace/neo4j/plugins/`；按官方兼容矩阵换 GDS 版本；改完 `neo4j restart` |
 | LOAD CSV 找不到文件 | CSV 不在 import 目录 | 放 `/workspace/neo4j/import/`，Cypher 用 `file:///xxx.csv` |
-| RocketRide 部署后 curl 超时 | scorer 还没就绪，pipeline 卡在 step3 | 先用 mock scorer（B3 本来就是 stub），SCORER_URL 就绪后再切 |
+| pipeline 调 scorer 超时 | scorer 还没就绪 | 先用 mock scorer（B3 本来就是 stub），SCORER_URL 就绪后再切 |
+| cloud.rocketride.ai 打不开/部署失败 | 官方已确认今日 outage | **不要死磕**：本地 runtime 是官方认可路径；把 Discord 原文存进 decisions.md，继续 |
 | proxy.runpod.net 返回 502/524 | scorer 没监听 0.0.0.0，或 8000 没在模板暴露 | `uvicorn app:app --host 0.0.0.0 --port 8000`；模板补端口需重启 pod |
 | pod 重启后 Neo4j 没了 | 进程不自启 | 都装在 /workspace，数据没丢：`/workspace/neo4j/bin/neo4j start` 拉起来即可 |
 | pod 半路被回收 | 用了 Spot | 今天全用 On-Demand，别省这几刀 |
