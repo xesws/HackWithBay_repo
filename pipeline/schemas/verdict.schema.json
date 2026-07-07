@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "graphjudge:verdict.schema.json",
+  "title": "GraphJudge verdict JSON (contracts.md §4.2)",
+  "description": "Scorer OUTPUT = results table content = frontend render input. graph.* MUST be render-ready (frontend never touches Neo4j).",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["job_id", "doc_score", "claims", "graph"],
+  "properties": {
+    "job_id": { "type": "string", "minLength": 1 },
+    "doc_score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "claims": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/claim_verdict" }
+    },
+    "graph": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["nodes", "edges"],
+      "properties": {
+        "nodes": { "type": "array", "items": { "$ref": "#/definitions/node" } },
+        "edges": { "type": "array", "items": { "$ref": "#/definitions/edge" } }
+      }
+    }
+  },
+  "definitions": {
+    "claim_verdict": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["cid", "status", "cluster_flag", "grounding_ratio", "dist_to_core", "evidence"],
+      "properties": {
+        "cid": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["SUPPORTED", "CONTRADICTED", "UNGROUNDED"] },
+        "cluster_flag": { "type": "boolean" },
+        "grounding_ratio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "dist_to_core": { "type": ["integer", "null"] },
+        "evidence": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": ["type", "path"],
+          "properties": {
+            "type": { "type": "string" },
+            "truth": { "type": ["string", "number", "null"] },
+            "path": { "type": "array", "items": { "type": ["string", "number"] } }
+          }
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "label", "kind", "color"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string" },
+        "kind": { "type": "string" },
+        "color": { "type": "string", "enum": ["green", "red", "gray", "orange"] }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["src", "dst", "rel", "status"],
+      "properties": {
+        "src": { "type": "string", "minLength": 1 },
+        "dst": { "type": "string", "minLength": 1 },
+        "rel": { "type": "string" },
+        "status": { "type": "string" }
+      }
+    }
+  }
+}
