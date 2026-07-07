@@ -1,8 +1,16 @@
-# GraphJudge
+<div align="center">
+
+<img src="docs/assets/logo.svg" alt="GraphJudge — graph-as-judge factuality evaluation" width="720">
+
+**Everyone judges LLMs with LLMs. We judge them with graphs.**
+
+[Live demo](https://graphjudge.butterbase.dev) · [Design](docs/DESIGN.md) · [Demo script](docs/DEMO.md) · [Contracts](docs/contracts.md)
+
+</div>
+
+---
 
 GraphJudge is a graph-grounded factuality judge for LLM output, built for HackwithBay 3.0. A user pastes generated text, GraphJudge extracts atomic claims, anchors them to a trusted Neo4j reference graph, and returns a verdict for each claim with graph evidence.
-
-Tagline: **Everyone judges LLMs with LLMs. We judge them with graphs.**
 
 Live demo: https://graphjudge.butterbase.dev
 

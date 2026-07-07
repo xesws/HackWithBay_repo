@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" role="img" aria-label="GraphJudge — graph-as-judge factuality evaluation">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111c31"/>
+      <stop offset="1" stop-color="#0a0f1c"/>
+    </linearGradient>
+    <radialGradient id="coreGlow" gradientUnits="userSpaceOnUse" cx="118" cy="96" r="62">
+      <stop offset="0" stop-color="#22c55e" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#22c55e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- panel -->
+  <rect x="3" y="3" width="634" height="194" rx="22" fill="url(#bg)" stroke="#243149" stroke-width="1.5"/>
+
+  <!-- grounded-core glow -->
+  <circle cx="118" cy="96" r="60" fill="url(#coreGlow)"/>
+
+  <!-- faint constellation field -->
+  <g fill="#94a3b8" opacity="0.16">
+    <circle cx="70" cy="52" r="1.3"/>
+    <circle cx="150" cy="138" r="1.3"/>
+    <circle cx="205" cy="122" r="1.2"/>
+    <circle cx="58" cy="112" r="1.1"/>
+  </g>
+
+  <!-- edges -->
+  <g stroke-linecap="round" fill="none">
+    <!-- green: grounded core (connected) -->
+    <g stroke="#22c55e" stroke-opacity="0.6" stroke-width="2.2">
+      <line x1="78" y1="82" x2="128" y2="70"/>
+      <line x1="128" y1="70" x2="158" y2="104"/>
+      <line x1="158" y1="104" x2="108" y2="122"/>
+      <line x1="108" y1="122" x2="78" y2="82"/>
+      <line x1="128" y1="70" x2="108" y2="122"/>
+    </g>
+    <!-- red: contradiction edge -->
+    <line x1="158" y1="104" x2="168" y2="150" stroke="#ef4444" stroke-opacity="0.85" stroke-width="2.4"/>
+    <!-- orange: fabricated cluster (a closed triangle, anchored to nothing) -->
+    <g stroke="#f59e0b" stroke-opacity="0.7" stroke-width="2.2">
+      <line x1="190" y1="50" x2="218" y2="66"/>
+      <line x1="218" y1="66" x2="193" y2="84"/>
+      <line x1="193" y1="84" x2="190" y2="50"/>
+    </g>
+  </g>
+
+  <!-- nodes -->
+  <!-- green core -->
+  <g stroke="#0a0f1c" stroke-width="1.5">
+    <circle cx="78" cy="82" r="9" fill="#22c55e" opacity="0.14" stroke="none"/>
+    <circle cx="78" cy="82" r="6" fill="#22c55e"/>
+    <circle cx="128" cy="70" r="10" fill="#22c55e" opacity="0.14" stroke="none"/>
+    <circle cx="128" cy="70" r="7" fill="#22c55e"/>
+    <circle cx="158" cy="104" r="9" fill="#22c55e" opacity="0.14" stroke="none"/>
+    <circle cx="158" cy="104" r="6" fill="#22c55e"/>
+    <circle cx="108" cy="122" r="9" fill="#22c55e" opacity="0.14" stroke="none"/>
+    <circle cx="108" cy="122" r="6" fill="#22c55e"/>
+    <!-- red: contradicted node -->
+    <circle cx="168" cy="150" r="9" fill="#ef4444" opacity="0.16" stroke="none"/>
+    <circle cx="168" cy="150" r="6" fill="#ef4444"/>
+    <!-- gray: ungrounded orphan (no edges) -->
+    <circle cx="55" cy="150" r="8" fill="#9ca3af" opacity="0.14" stroke="none"/>
+    <circle cx="55" cy="150" r="5.5" fill="#9ca3af"/>
+    <!-- orange: fabricated cluster -->
+    <circle cx="190" cy="50" r="8" fill="#f59e0b" opacity="0.16" stroke="none"/>
+    <circle cx="190" cy="50" r="5.5" fill="#f59e0b"/>
+    <circle cx="218" cy="66" r="8" fill="#f59e0b" opacity="0.16" stroke="none"/>
+    <circle cx="218" cy="66" r="5.5" fill="#f59e0b"/>
+    <circle cx="193" cy="84" r="8" fill="#f59e0b" opacity="0.16" stroke="none"/>
+    <circle cx="193" cy="84" r="5.5" fill="#f59e0b"/>
+  </g>
+
+  <!-- divider -->
+  <line x1="236" y1="52" x2="236" y2="148" stroke="#243149" stroke-width="1.4" opacity="0.85"/>
+
+  <!-- wordmark -->
+  <text x="252" y="102" font-family="'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif" font-size="52" font-weight="700" letter-spacing="-0.5" fill="#f8fafc">GraphJudge</text>
+
+  <!-- four-verdict palette underline -->
+  <g>
+    <rect x="253" y="120" width="55" height="4" rx="2" fill="#22c55e"/>
+    <rect x="313" y="120" width="55" height="4" rx="2" fill="#ef4444"/>
+    <rect x="373" y="120" width="55" height="4" rx="2" fill="#9ca3af"/>
+    <rect x="433" y="120" width="55" height="4" rx="2" fill="#f59e0b"/>
+  </g>
+
+  <!-- sublabel -->
+  <text x="254" y="144" font-family="'SF Mono','JetBrains Mono',Menlo,Consolas,monospace" font-size="12" font-weight="600" letter-spacing="2.8" fill="#8595ad">GRAPH-AS-JUDGE FACTUALITY EVAL</text>
+</svg>
