@@ -1,0 +1,8 @@
+{
+  "run_id": "20260707-231736",
+  "job_id": "56cb2d85-3c63-4762-92bd-50e231b746cd",
+  "rocketride_uri": "ws://localhost:5565",
+  "rocketride_engine_returned_verdict": true,
+  "log": "/workspace/HackWithBay/HackWithBay_repo/docs/rocketride-live-20260707-231736.log",
+  "verdict": "/workspace/HackWithBay/HackWithBay_repo/docs/rocketride-live-20260707-231736.verdict.json"
+}

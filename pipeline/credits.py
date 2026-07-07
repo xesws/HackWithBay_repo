@@ -75,12 +75,21 @@ def _post_json(url: str, body: dict[str, Any], *, bearer: str | None = None, tim
 
 
 # --- credit gate ---------------------------------------------------------------
-def consume_credit(user_id: str, job_id: str, bearer: str | None = None) -> dict[str, Any]:
+def consume_credit(
+    user_id: str,
+    job_id: str,
+    bearer: str | None = None,
+    *,
+    strict: bool = False,
+) -> dict[str, Any]:
     """Consume one credit for the caller (contracts §4.5 `consume_credit`).
 
     Returns {"ok": bool, "balance": int}. Real backend when CONSUME_CREDIT_URL is
     set (POST with the end-user `bearer` JWT → fn debits `ctx.user.id`); otherwise
     an in-memory stub so the chain runs offline.
+
+    strict=True is for production proof runs: require the live fn and raise on
+    backend errors so a fail-open path cannot be mistaken for evidence.
 
     FAIL-OPEN: a flaky / unauthenticated credit backend (network error, 401/500)
     must never break a live verify. On any backend EXCEPTION we log and return
@@ -93,11 +102,15 @@ def consume_credit(user_id: str, job_id: str, bearer: str | None = None) -> dict
             result = _post_json(url, {"user_id": user_id, "job_id": job_id}, bearer=bearer)
             return {"ok": bool(result.get("ok")), "balance": int(result.get("balance", 0))}
         except Exception as exc:  # pragma: no cover - needs live backend
+            if strict:
+                raise RuntimeError(f"consume_credit backend error for user={user_id} job={job_id}") from exc
             log.warning(
                 "consume_credit backend error for user=%s job=%s (%s); FAILING OPEN",
                 user_id, job_id, exc,
             )
             return {"ok": True, "balance": -1, "degraded": True}
+    if strict:
+        raise RuntimeError("CONSUME_CREDIT_URL is not set; strict production proof requires live credit gate")
     # offline stub
     if user_id in _STUB_BROKE_USERS:
         return {"ok": False, "balance": 0}

@@ -48,6 +48,7 @@ router = APIRouter()
 
 # path to the RocketRide pipeline definition (Track B deliverable 1).
 PIPE_PATH = Path(__file__).resolve().parents[1] / "pipeline" / "graphjudge.pipe"
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 class VerifyRequest(BaseModel):
@@ -104,36 +105,28 @@ def _extract_verdict(result: Any) -> Optional[dict[str, Any]]:
     runtime version; try the common ones, parsing JSON strings. Returns None if
     nothing verdict-shaped is found (caller then uses the direct fallback).
     """
-    def _as_dict(obj: Any) -> Optional[dict[str, Any]]:
-        if isinstance(obj, str):
-            try:
-                obj = json.loads(obj)
-            except (ValueError, TypeError):
-                return None
-        if isinstance(obj, dict) and "job_id" in obj and "graph" in obj:
-            return obj
-        return None
+    from pipeline.graphjudge_runtime import extract_verdict_from_result
 
-    if not isinstance(result, dict):
-        return None
-    # direct hit
-    hit = _as_dict(result)
-    if hit:
-        return hit
-    # common containers: answers[0], output, result, data
-    answers = result.get("answers")
-    if isinstance(answers, list) and answers:
-        hit = _as_dict(answers[0])
-        if hit:
-            return hit
-    for key in ("output", "result", "data", "verdict"):
-        hit = _as_dict(result.get(key))
-        if hit:
-            return hit
-    return None
+    return extract_verdict_from_result(result)
 
 
-async def _run_via_rocketride(job_id: str, user_id: str, text: str) -> Optional[dict[str, Any]]:
+def _rocketride_pythonpath() -> str:
+    entries = [str(REPO_ROOT)]
+    for site_packages in sorted((REPO_ROOT / ".venv" / "lib").glob("python*/site-packages")):
+        if site_packages.is_dir():
+            entries.append(str(site_packages))
+    existing = os.environ.get("PYTHONPATH")
+    if existing:
+        entries.append(existing)
+    return os.pathsep.join(dict.fromkeys(entries))
+
+
+async def _run_via_rocketride(
+    job_id: str,
+    user_id: str,
+    text: str,
+    bearer: str | None = None,
+) -> Optional[dict[str, Any]]:
     """PRIMARY PATH: run pipeline/graphjudge.pipe via the rocketride SDK in-process.
 
     Gated behind PIPELINE_USE_ROCKETRIDE=1 (default off). Connects to the
@@ -145,18 +138,51 @@ async def _run_via_rocketride(job_id: str, user_id: str, text: str) -> Optional[
     """
     from rocketride import RocketRideClient  # local import: optional dependency path
 
-    body = json.dumps({"user_id": user_id, "job_id": job_id, "text": text})
-    client = RocketRideClient()
+    body = json.dumps(
+        {
+            "user_id": user_id,
+            "job_id": job_id,
+            "text": text,
+            "bearer": bearer,
+            "strict": False,
+            # /verify already consumed credit immediately before calling this.
+            # The standalone proof runner leaves this false so the .pipe itself
+            # proves the live consume_credit call.
+            "credit_already_consumed": True,
+        }
+    )
+    client = RocketRideClient(
+        uri=os.environ.get("ROCKETRIDE_URI", "ws://localhost:5565"),
+        auth=os.environ.get("ROCKETRIDE_APIKEY", ""),
+        request_timeout=int(os.environ.get("ROCKETRIDE_REQUEST_TIMEOUT_MS", "90000")),
+    )
     try:
         # connect() picks up runtime host/key from the client env/.env config.
         if hasattr(client, "connect"):
             await client.connect()
-        started = await client.use(filepath=str(PIPE_PATH), use_existing=True)
+        env = {
+            "PYTHONPATH": _rocketride_pythonpath(),
+            "GRAPHJUDGE_REPO_ROOT": str(REPO_ROOT),
+        }
+        for key in (
+            "SCORER_URL",
+            "CONSUME_CREDIT_URL",
+            "OPENROUTER_API_KEY",
+            "PERSIST_RESULT_URL",
+            "BUTTERBASE_API_KEY",
+        ):
+            if os.environ.get(key):
+                env[key] = os.environ[key]
+        started = await client.use(
+            filepath=str(PIPE_PATH),
+            use_existing=True,
+            env=env,
+        )
         token = started.get("token")
         if not token:
             log.warning("rocketride use() returned no token; falling back")
             return None
-        result = await client.send(token, body, mimetype="application/json")
+        result = await client.send(token, body, mimetype="text/plain")
         return _extract_verdict(result)
     finally:
         if hasattr(client, "disconnect"):
@@ -184,7 +210,7 @@ async def verify(req: VerifyRequest, authorization: Optional[str] = Header(defau
     verdict: Optional[dict[str, Any]] = None
     if os.environ.get("PIPELINE_USE_ROCKETRIDE") == "1":
         try:
-            verdict = await _run_via_rocketride(job_id, req.user_id, req.text)
+            verdict = await _run_via_rocketride(job_id, req.user_id, req.text, bearer=bearer)
         except Exception as exc:  # pragma: no cover - needs live runtime
             log.warning("rocketride path failed for job_id=%s (%s); using direct fallback", job_id, exc)
             verdict = None
@@ -201,6 +227,7 @@ def healthz() -> dict[str, Any]:
         "ok": True,
         "pipe": PIPE_PATH.name,
         "rocketride": os.environ.get("PIPELINE_USE_ROCKETRIDE") == "1",
+        "rocketride_uri": os.environ.get("ROCKETRIDE_URI", "ws://localhost:5565"),
         "credit_backend": "live" if os.environ.get("CONSUME_CREDIT_URL") else "stub",
         "persist_backend": "live" if os.environ.get("PERSIST_RESULT_URL") else "noop",
     }

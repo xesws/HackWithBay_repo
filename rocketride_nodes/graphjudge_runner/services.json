@@ -1,0 +1,26 @@
+{
+  "title": "GraphJudge Runner",
+  "protocol": "graphjudge_runner://",
+  "classType": ["text"],
+  "capabilities": [],
+  "register": "filter",
+  "node": "python",
+  "path": "nodes.graphjudge_runner",
+  "prefix": "GraphJudge",
+  "description": [
+    "Runs the GraphJudge production proof steps: consume_credit, OpenRouter extraction, public scorer /score, and best-effort persistence."
+  ],
+  "icon": "util-text.svg",
+  "documentation": "https://docs.rocketride.org",
+  "lanes": {
+    "text": ["text"]
+  },
+  "fields": {},
+  "shape": [
+    {
+      "section": "Pipe",
+      "title": "GraphJudge Runner",
+      "properties": ["type"]
+    }
+  ]
+}
