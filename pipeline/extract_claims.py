@@ -12,10 +12,11 @@ SEAM — call_model(text) -> str:
     proves the schema + scoring path end-to-end.
 
     To measure the REAL card-B2 metric ("10 assertions, >=8 extracted correctly")
-    you must swap in a live model: fill in `call_model_llm()` below (it reads the
-    prompt from pipeline/prompts/extract_claims.md and would POST to the gateway
-    using GATEWAY_API_KEY) and select it via  --model llm . Without a funded key
-    this measurement is DEFERRED (see dev-B.md NEEDS-HUMAN).
+    swap in a live model via `call_model_llm()` below, which routes through
+    OpenRouter (pipeline/llm.py, model z-ai/glm-5.2) using OPENROUTER_API_KEY.
+    Select it with  --model llm  (or  --model auto , which uses the LLM when
+    OPENROUTER_API_KEY is set and the offline regex otherwise). Without a key this
+    measurement is DEFERRED (see dev-B.md NEEDS-HUMAN).
 """
 
 from __future__ import annotations
@@ -26,7 +27,7 @@ import os
 import re
 import sys
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 
 import jsonschema
 
@@ -96,26 +97,34 @@ def regex_extract(text: str) -> list[dict[str, Any]]:
 def call_model(text: str) -> str:
     """Return a §4.1 claims JSON *string* for `text`.
 
-    DEFAULT = offline deterministic extractor. Swap `call_model_llm` in here (or
-    pass --model llm on the CLI) once a funded gateway key exists.
+    DEFAULT = offline deterministic extractor. Use `call_model_llm` (OpenRouter)
+    via --model llm / --model auto once OPENROUTER_API_KEY is set.
     """
     return json.dumps({"claims": regex_extract(text)})
 
 
 def call_model_llm(text: str) -> str:  # pragma: no cover - needs a live key
-    """Real-LLM extractor. NOT wired: no GATEWAY_API_KEY available offline.
+    """Real-LLM extractor via OpenRouter (pipeline/llm.py, model z-ai/glm-5.2).
 
-    Intended shape (kept as a spec so a human can drop in a key later):
-        prompt = PROMPT_PATH.read_text(encoding="utf-8")
-        POST {GATEWAY}/... with system=prompt, user=text, GATEWAY_API_KEY auth
-        return the model's raw text (must be §4.1 JSON only)
+    Sends the §4.1 extraction prompt (pipeline/prompts/extract_claims.md) as the
+    system message and `text` as the user message; returns the model's raw text
+    (must be §4.1 JSON only). Requires OPENROUTER_API_KEY — raises without one, so
+    the offline regex extractor stays the default (see dev-B.md NEEDS-HUMAN).
     """
-    if not os.environ.get("GATEWAY_API_KEY"):
-        raise RuntimeError(
-            "call_model_llm requires GATEWAY_API_KEY; none set. This is the "
-            "DEFERRED / NEEDS-HUMAN measurement — see dev-B.md."
-        )
-    raise NotImplementedError("wire the gateway client here once a key exists")
+    from pipeline.llm import openrouter_chat  # local import: only needed on the LLM path
+
+    prompt = PROMPT_PATH.read_text(encoding="utf-8")
+    messages = [
+        {"role": "system", "content": prompt},
+        {"role": "user", "content": text},
+    ]
+    return openrouter_chat(messages)
+
+
+def default_model() -> Callable[[str], str]:
+    """Auto-select the extractor: OpenRouter LLM when OPENROUTER_API_KEY is set,
+    otherwise the deterministic offline regex extractor (no key needed)."""
+    return call_model_llm if os.environ.get("OPENROUTER_API_KEY") else call_model
 
 
 MODELS: dict[str, Callable[[str], str]] = {"offline": call_model, "llm": call_model_llm}
@@ -126,9 +135,16 @@ def load_schema() -> dict[str, Any]:
     return json.loads(CLAIMS_SCHEMA.read_text(encoding="utf-8"))
 
 
-def extract_claims(job_id: str, text: str, model: Callable[[str], str] = call_model,
+def extract_claims(job_id: str, text: str, model: Optional[Callable[[str], str]] = None,
                    validate: bool = True) -> dict[str, Any]:
-    """Run the model, coerce to the §4.1 envelope, and (optionally) validate."""
+    """Run the model, coerce to the §4.1 envelope, and (optionally) validate.
+
+    `model=None` auto-selects via default_model(): OpenRouter LLM when
+    OPENROUTER_API_KEY is set, else the offline regex extractor. Pass an explicit
+    callable (e.g. call_model) to pin a specific extractor.
+    """
+    if model is None:
+        model = default_model()
     raw = model(text)
     parsed = json.loads(raw)
     payload = {"job_id": job_id, "claims": parsed.get("claims", parsed if isinstance(parsed, list) else [])}
@@ -180,14 +196,15 @@ def read_ledger(path: Path) -> list[dict[str, str]]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="extract §4.1 claims from a benchmark doc and score vs the ledger")
     parser.add_argument("--doc", choices=["A", "B", "C", "D", "E", "all"], default="A")
-    parser.add_argument("--model", choices=sorted(MODELS), default="offline",
-                        help="'offline'=regex inverse (no key); 'llm'=live gateway (needs GATEWAY_API_KEY)")
+    parser.add_argument("--model", choices=[*sorted(MODELS), "auto"], default="offline",
+                        help="'offline'=regex inverse (no key); 'llm'=OpenRouter z-ai/glm-5.2 "
+                             "(needs OPENROUTER_API_KEY); 'auto'=llm when OPENROUTER_API_KEY set, else offline")
     parser.add_argument("--ledger", type=Path, default=DEFAULT_LEDGER)
     parser.add_argument("--docs-dir", type=Path, default=DEFAULT_DOCS)
     parser.add_argument("--print-claims", action="store_true")
     args = parser.parse_args()
 
-    model = MODELS[args.model]
+    model = default_model() if args.model == "auto" else MODELS[args.model]
     rows = read_ledger(args.ledger)
     docs = ["A", "B", "C", "D", "E"] if args.doc == "all" else [args.doc]
 
