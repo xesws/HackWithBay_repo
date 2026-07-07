@@ -149,7 +149,25 @@ Mira Vell works at Aster Quay Group.
 
 Use this to explain that `UNGROUNDED` does not mean false. It means the trusted graph cannot support the claim.
 
-### 5. Fabricated Cluster Demo
+### 5. Custom Unknown Placeholder Demo
+
+Expected result: one green known entity, one gray unknown mention, and an `UNGROUNDED` claim.
+
+```text
+Corwin Mavik manages XXXX.
+```
+
+Use this when you want to show that GraphJudge can handle arbitrary unknown names/placeholders. The subject resolves to the trusted graph, but `XXXX` does not, so the claim is shown as ungrounded instead of disappearing.
+
+Other safe variants:
+
+```text
+Arlen Veyro owns a pet named UNKNOWN.
+Gavo Rellin lives in Someplace.
+Brisa Nalore is married to Mystery Person.
+```
+
+### 6. Fabricated Cluster Demo
 
 Expected result: orange ungrounded cluster.
 
@@ -159,7 +177,7 @@ Zavren Pell works at Cindrel Motive Office. Ostia Kel works at Cindrel Motive Of
 
 Use this to show GraphJudge's main graph-specific behavior: the claims are internally coherent but disconnected from the trusted core.
 
-### 6. Credit Gate Demo
+### 7. Credit Gate Demo
 
 Use any sample input while signed in as:
 
