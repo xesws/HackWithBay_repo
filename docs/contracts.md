@@ -1,14 +1,14 @@
-# GraphJudge — contracts v1 (frozen interfaces)
+# GraphJudge — contracts v1.1 (frozen interfaces)
 
-> Copied verbatim from `docs/OPS.md` §4 per OPS §0. This is the frozen interface set.
-> Any change requires a `decisions.md` ADR + human ruling, then a version bump in this header.
+> Base = `docs/OPS.md` §4 (verbatim). **v1.1 (decisions #1, human-ruled):** `job_id` is a uuid4 string; §4.5 tables match the live Butterbase schema (uuid ids, `ts`, `verdict_json`, `results.user_id`).
+> Any further change requires a `decisions.md` ADR + human ruling, then a version bump here.
 
 ---
 
 ### 4.1 claims JSON（抽取输出 = scorer 输入 = LLM-judge 输入）
 
 ```json
-{"job_id":"j_001","claims":[
+{"job_id":"550e8400-e29b-41d4-a716-446655440000","claims":[
   {"cid":"c1","kind":"relational","text":"Claude was developed by Google.",
    "subject":"Claude","rel":"developed_by","object":"Google"},
   {"cid":"c2","kind":"attribute","text":"GPT-4 was released in 2022.",
@@ -16,11 +16,12 @@
 ]}
 ```
 `rel` 只许用词表：`developed_by, released_in, based_on, evaluated_on, sota_on, authored_by, acquired_by, cited_by`；`attr` 只许：`release_year, param_count_b, context_window_k`。
+**`job_id` 是 uuid4 字符串**（v1.1, decisions #1）；所有生成方（SPA / pipeline / benchmark_runner）一律 uuid4，示例值仅示意。
 
 ### 4.2 verdict JSON（scorer 输出 = results 表内容 = 前端渲染输入）
 
 ```json
-{"job_id":"j_001","doc_score":0.72,
+{"job_id":"550e8400-e29b-41d4-a716-446655440000","doc_score":0.72,
  "claims":[{"cid":"c1","status":"CONTRADICTED","cluster_flag":false,
    "grounding_ratio":1.0,"dist_to_core":0,
    "evidence":{"type":"conflict","truth":"Anthropic",
@@ -42,7 +43,7 @@ response = 4.2 原样透传；credits 不足时返回 `{"error":"insufficient_cr
 
 ### 4.5 Butterbase（Track C 提供）
 
-表：`credits_ledger(id, user_id, delta int, reason text, created_at)`；`jobs(job_id pk, user_id, status, created_at)`；`results(job_id pk, verdict jsonb, created_at)`；服务端查询一律按 user_id 过滤（RLS 为可选加分）。
+表（v1.1, decisions #1 — 以 app_r1568bo1iteg 实际表为准）：`credits_ledger(id uuid pk, user_id uuid, delta int, reason text, ts timestamptz)`；`jobs(job_id uuid pk, user_id uuid, status text, created_at timestamptz)`；`results(job_id uuid pk → jobs, user_id uuid, verdict_json jsonb, created_at timestamptz)`；服务端查询一律按 user_id 过滤（RLS 为可选加分）。
 函数：`consume_credit(user_id, job_id) -> {"ok":bool,"balance":int}`（单事务：余额>0 则 insert delta=-1 并返回 ok=true）；`get_balance(user_id) -> {"balance":int}`。充值 = insert 正 delta（payment 流触发）。
 **单 key 模型推论**：SPA 不直连数据库——提交走 4.4 webhook（同步拿回 verdict），余额走 `get_balance`；per-user 数据隔离由服务端查询按 user_id 过滤保证，RLS 降级为可选加分项。auth 的浏览器侧初始化按 `@butterbase/sdk` README 实际签名为准（Track C 开工前 10 分钟定案）。
 

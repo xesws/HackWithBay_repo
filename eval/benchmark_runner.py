@@ -7,6 +7,7 @@ import argparse
 import csv
 import json
 import sys
+import uuid
 import urllib.error
 import urllib.request
 from collections import defaultdict
@@ -177,7 +178,7 @@ def main() -> int:
     matched = 0
     for doc, doc_rows in sorted(by_doc.items()):
         payload = {
-            "job_id": f"bench_{doc}",
+            "job_id": str(uuid.uuid4()),  # v1.1 (decisions #1): uuid4 job_id
             "claims": [claim_payload(row) for row in doc_rows],
         }
         verdict = post_score(args.scorer_url, payload, doc_rows, args.timeout)
