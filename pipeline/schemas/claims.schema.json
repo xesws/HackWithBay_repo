@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "graphjudge:claims.schema.json",
+  "title": "GraphJudge claims JSON (contracts.md §4.1)",
+  "description": "Extraction OUTPUT = scorer INPUT = LLM-judge INPUT. job_id + atomic claims[]. Each claim is EITHER relational (rel+object) OR attribute (attr+value), discriminated by `kind`.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["job_id", "claims"],
+  "properties": {
+    "job_id": { "type": "string", "minLength": 1 },
+    "claims": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/claim" }
+    }
+  },
+  "definitions": {
+    "claim": {
+      "type": "object",
+      "oneOf": [
+        {
+          "title": "relational claim",
+          "additionalProperties": false,
+          "required": ["cid", "kind", "text", "subject", "rel", "object"],
+          "properties": {
+            "cid": { "type": "string", "minLength": 1 },
+            "kind": { "const": "relational" },
+            "text": { "type": "string", "minLength": 1 },
+            "subject": { "type": "string", "minLength": 1 },
+            "rel": {
+              "type": "string",
+              "enum": [
+                "developed_by",
+                "released_in",
+                "based_on",
+                "evaluated_on",
+                "sota_on",
+                "authored_by",
+                "acquired_by",
+                "cited_by"
+              ]
+            },
+            "object": { "type": "string", "minLength": 1 }
+          }
+        },
+        {
+          "title": "attribute claim",
+          "additionalProperties": false,
+          "required": ["cid", "kind", "text", "subject", "attr", "value"],
+          "properties": {
+            "cid": { "type": "string", "minLength": 1 },
+            "kind": { "const": "attribute" },
+            "text": { "type": "string", "minLength": 1 },
+            "subject": { "type": "string", "minLength": 1 },
+            "attr": {
+              "type": "string",
+              "enum": ["release_year", "param_count_b", "context_window_k"]
+            },
+            "value": { "type": ["string", "number"] }
+          }
+        }
+      ]
+    }
+  }
+}
