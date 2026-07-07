@@ -3,3 +3,6 @@ dist/
 *.zip
 *.local
 .vite/
+
+# vite temp config bundles (left if a vite process is killed mid-load)
+vite.config.*.timestamp-*.mjs
