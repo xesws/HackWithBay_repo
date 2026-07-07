@@ -27,17 +27,9 @@
             "text": { "type": "string", "minLength": 1 },
             "subject": { "type": "string", "minLength": 1 },
             "rel": {
+              "$comment": "OPEN vocab (contracts §4.1 v1.2, decisions #2): format-only. Canonical AI-domain reference set: developed_by, released_in, based_on, evaluated_on, sota_on, authored_by, acquired_by, cited_by. Other domains (e.g. Eval-2 personal) define their own vocab in the extraction prompt; the scorer never hardcodes it.",
               "type": "string",
-              "enum": [
-                "developed_by",
-                "released_in",
-                "based_on",
-                "evaluated_on",
-                "sota_on",
-                "authored_by",
-                "acquired_by",
-                "cited_by"
-              ]
+              "minLength": 1
             },
             "object": { "type": "string", "minLength": 1 }
           }
@@ -52,8 +44,9 @@
             "text": { "type": "string", "minLength": 1 },
             "subject": { "type": "string", "minLength": 1 },
             "attr": {
+              "$comment": "OPEN vocab (contracts §4.1 v1.2, decisions #2): format-only. Canonical AI-domain reference set: release_year, param_count_b, context_window_k. Per-domain attrs defined in that domain's extraction prompt.",
               "type": "string",
-              "enum": ["release_year", "param_count_b", "context_window_k"]
+              "minLength": 1
             },
             "value": { "type": ["string", "number"] }
           }

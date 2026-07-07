@@ -1,6 +1,6 @@
-# GraphJudge — contracts v1.1 (frozen interfaces)
+# GraphJudge — contracts v1.2 (frozen interfaces)
 
-> Base = `docs/OPS.md` §4 (verbatim). **v1.1 (decisions #1, human-ruled):** `job_id` is a uuid4 string; §4.5 tables match the live Butterbase schema (uuid ids, `ts`, `verdict_json`, `results.user_id`).
+> Base = `docs/OPS.md` §4 (verbatim). **v1.1 (decisions #1, human-ruled):** `job_id` is a uuid4 string; §4.5 tables match the live Butterbase schema (uuid ids, `ts`, `verdict_json`, `results.user_id`). **v1.2 (decisions #2, human-ruled):** `rel`/`attr` are OPEN strings (format-only validation) so new domains (Eval-2 personal) work without a scorer change; the AI-domain vocab below is the canonical *reference* set, not a hard gate.
 > Any further change requires a `decisions.md` ADR + human ruling, then a version bump here.
 
 ---
@@ -15,7 +15,7 @@
    "subject":"GPT-4","attr":"release_year","value":2022}
 ]}
 ```
-`rel` 只许用词表：`developed_by, released_in, based_on, evaluated_on, sota_on, authored_by, acquired_by, cited_by`；`attr` 只许：`release_year, param_count_b, context_window_k`。
+`rel`/`attr` 为**开放字符串**，仅做格式校验（非空 string；schema `pipeline/schemas/claims.schema.json` 已去掉 enum）。下列为 **AI 域基准的规范参考词表**（该域 extraction prompt 应据此产出，非硬性门禁）：`rel`=`developed_by, released_in, based_on, evaluated_on, sota_on, authored_by, acquired_by, cited_by`；`attr`=`release_year, param_count_b, context_window_k`。**其他域基准（如 Eval-2 个人域）在各自 extraction prompt 内定义本域词表**；scorer 的校验与打分均不硬编码词表（rel/attr 由参考图内容驱动，`is_functional`/`facts_for`/`attr_of` 查图而非查白名单）——decisions #2 (v1.2)。
 **`job_id` 是 uuid4 字符串**（v1.1, decisions #1）；所有生成方（SPA / pipeline / benchmark_runner）一律 uuid4，示例值仅示意。
 
 ### 4.2 verdict JSON（scorer 输出 = results 表内容 = 前端渲染输入）
