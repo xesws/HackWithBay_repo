@@ -1,4 +1,4 @@
-OPS | v0.1 | Phase2 e2e ✅ LIVE: SPA→/verify→gemini 抽取→real Neo4j+GDS 打分→星座图渲染; scoreboard 进行中 | 阻塞: 无 | 更新 21:23
+OPS | v0.1 | Phase2 e2e ✅ LIVE + **demo 切到个人域(Eval-2)**: Neo4j 换 51ent/107fact 个人图, 个人 extraction prompt, SPA 个人 sample; paste→/verify→3绿2红1灰6橙 已验证 | 阻塞: 无 | 更新 22:14
 OPS | 契约 v1.1 (decisions #1): job_id uuid4; §4.5 表对齐 live; 不 drop 表。LLM 一律 OpenRouter/google-gemini-3.5-flash | 更新 21:23
 A | v0.1 | A2+A4 ✅ tier=gds; scorer 活线 :8888 (/score + /verify, real Neo4j+GDS, CORS, bench 63/63) | 阻塞: 无 | 更新 21:23
 B | v0.1 | /verify(Shape2)+B3-real+OpenRouter 抽取(30s超时+regex兜底); **credit gate=LIVE**(consume_credit 接线, JWT 转发, fail-open); demo 号 999/0 已 e2e 验证 | 阻塞: 无 | 更新 22:00
