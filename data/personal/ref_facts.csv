@@ -1,0 +1,108 @@
+src,src_name,src_type,rel,dst,dst_name,dst_type,functional
+p_arlen_veyro,Arlen Veyro,Person,works_at,org_aster_quay_group,Aster Quay Group,Org,true
+p_brisa_nalore,Brisa Nalore,Person,works_at,org_brindle_nacre_works,Brindle Nacre Works,Org,true
+p_corwin_mavik,Corwin Mavik,Person,works_at,team_velora_signal,Velora Signal Team,Team,true
+p_della_quorin,Della Quorin,Person,works_at,team_northpass_loom,Northpass Loom Cooperative,Team,true
+p_eron_pellis,Eron Pellis,Person,works_at,org_aster_quay_group,Aster Quay Group,Org,true
+p_fia_selwick,Fia Selwick,Person,works_at,team_velora_signal,Velora Signal Team,Team,true
+p_gavo_rellin,Gavo Rellin,Person,works_at,org_brindle_nacre_works,Brindle Nacre Works,Org,true
+p_hessa_torvane,Hessa Torvane,Person,works_at,team_northpass_loom,Northpass Loom Cooperative,Team,true
+p_ivo_caldrin,Ivo Caldrin,Person,works_at,org_aster_quay_group,Aster Quay Group,Org,true
+p_jessa_minlow,Jessa Minlow,Person,works_at,team_velora_signal,Velora Signal Team,Team,true
+p_kellan_orvix,Kellan Orvix,Person,works_at,org_brindle_nacre_works,Brindle Nacre Works,Org,true
+p_luma_rennic,Luma Rennic,Person,works_at,team_northpass_loom,Northpass Loom Cooperative,Team,true
+p_maro_veskin,Maro Veskin,Person,works_at,org_aster_quay_group,Aster Quay Group,Org,true
+p_nira_tavro,Nira Tavro,Person,works_at,team_velora_signal,Velora Signal Team,Team,true
+p_oren_halix,Oren Halix,Person,works_at,org_brindle_nacre_works,Brindle Nacre Works,Org,true
+p_arlen_veyro,Arlen Veyro,Person,lives_in,city_dovemarsh,Dovemarsh,City,false
+p_brisa_nalore,Brisa Nalore,Person,lives_in,city_larkhollow,Larkhollow,City,false
+p_corwin_mavik,Corwin Mavik,Person,lives_in,city_quillbay,Quillbay,City,false
+p_della_quorin,Della Quorin,Person,lives_in,city_vesperfield,Vesperfield,City,false
+p_eron_pellis,Eron Pellis,Person,lives_in,city_orison_vale,Orison Vale,City,false
+p_fia_selwick,Fia Selwick,Person,lives_in,city_quillbay,Quillbay,City,false
+p_gavo_rellin,Gavo Rellin,Person,lives_in,city_dovemarsh,Dovemarsh,City,false
+p_hessa_torvane,Hessa Torvane,Person,lives_in,city_larkhollow,Larkhollow,City,false
+p_ivo_caldrin,Ivo Caldrin,Person,lives_in,city_orison_vale,Orison Vale,City,false
+p_jessa_minlow,Jessa Minlow,Person,lives_in,city_vesperfield,Vesperfield,City,false
+p_kellan_orvix,Kellan Orvix,Person,lives_in,city_quillbay,Quillbay,City,false
+p_luma_rennic,Luma Rennic,Person,lives_in,city_dovemarsh,Dovemarsh,City,false
+p_maro_veskin,Maro Veskin,Person,lives_in,city_larkhollow,Larkhollow,City,false
+p_nira_tavro,Nira Tavro,Person,lives_in,city_orison_vale,Orison Vale,City,false
+p_oren_halix,Oren Halix,Person,lives_in,city_vesperfield,Vesperfield,City,false
+p_arlen_veyro,Arlen Veyro,Person,born_in,year_1984,1984,Year,true
+p_brisa_nalore,Brisa Nalore,Person,born_in,year_1986,1986,Year,true
+p_corwin_mavik,Corwin Mavik,Person,born_in,year_1988,1988,Year,true
+p_della_quorin,Della Quorin,Person,born_in,year_1990,1990,Year,true
+p_eron_pellis,Eron Pellis,Person,born_in,year_1992,1992,Year,true
+p_fia_selwick,Fia Selwick,Person,born_in,year_1994,1994,Year,true
+p_gavo_rellin,Gavo Rellin,Person,born_in,year_1996,1996,Year,true
+p_hessa_torvane,Hessa Torvane,Person,born_in,year_1998,1998,Year,true
+p_ivo_caldrin,Ivo Caldrin,Person,born_in,year_2000,2000,Year,true
+p_jessa_minlow,Jessa Minlow,Person,born_in,year_2002,2002,Year,true
+p_kellan_orvix,Kellan Orvix,Person,born_in,year_1984,1984,Year,true
+p_luma_rennic,Luma Rennic,Person,born_in,year_1986,1986,Year,true
+p_maro_veskin,Maro Veskin,Person,born_in,year_1988,1988,Year,true
+p_nira_tavro,Nira Tavro,Person,born_in,year_1990,1990,Year,true
+p_oren_halix,Oren Halix,Person,born_in,year_1992,1992,Year,true
+p_arlen_veyro,Arlen Veyro,Person,joined_in,year_2020,2020,Year,false
+p_brisa_nalore,Brisa Nalore,Person,joined_in,year_2021,2021,Year,false
+p_corwin_mavik,Corwin Mavik,Person,joined_in,year_2022,2022,Year,false
+p_della_quorin,Della Quorin,Person,joined_in,year_2023,2023,Year,false
+p_eron_pellis,Eron Pellis,Person,joined_in,year_2024,2024,Year,false
+p_fia_selwick,Fia Selwick,Person,joined_in,year_2025,2025,Year,false
+p_gavo_rellin,Gavo Rellin,Person,joined_in,year_2020,2020,Year,false
+p_hessa_torvane,Hessa Torvane,Person,joined_in,year_2021,2021,Year,false
+p_ivo_caldrin,Ivo Caldrin,Person,joined_in,year_2022,2022,Year,false
+p_jessa_minlow,Jessa Minlow,Person,joined_in,year_2023,2023,Year,false
+p_kellan_orvix,Kellan Orvix,Person,joined_in,year_2024,2024,Year,false
+p_luma_rennic,Luma Rennic,Person,joined_in,year_2025,2025,Year,false
+p_maro_veskin,Maro Veskin,Person,joined_in,year_2020,2020,Year,false
+p_nira_tavro,Nira Tavro,Person,joined_in,year_2021,2021,Year,false
+p_oren_halix,Oren Halix,Person,joined_in,year_2022,2022,Year,false
+p_arlen_veyro,Arlen Veyro,Person,owns_pet,pet_bramble,Bramble,Pet,false
+p_brisa_nalore,Brisa Nalore,Person,owns_pet,pet_tiko,Tiko,Pet,false
+p_corwin_mavik,Corwin Mavik,Person,owns_pet,pet_nema,Nema,Pet,false
+p_della_quorin,Della Quorin,Person,owns_pet,pet_quince,Quince,Pet,false
+p_eron_pellis,Eron Pellis,Person,owns_pet,pet_pavo,Pavo,Pet,false
+p_fia_selwick,Fia Selwick,Person,owns_pet,pet_ruffle,Ruffle,Pet,false
+p_gavo_rellin,Gavo Rellin,Person,owns_pet,pet_bramble,Bramble,Pet,false
+p_hessa_torvane,Hessa Torvane,Person,owns_pet,pet_tiko,Tiko,Pet,false
+p_ivo_caldrin,Ivo Caldrin,Person,owns_pet,pet_nema,Nema,Pet,false
+p_jessa_minlow,Jessa Minlow,Person,owns_pet,pet_quince,Quince,Pet,false
+p_kellan_orvix,Kellan Orvix,Person,owns_pet,pet_pavo,Pavo,Pet,false
+p_luma_rennic,Luma Rennic,Person,owns_pet,pet_ruffle,Ruffle,Pet,false
+p_maro_veskin,Maro Veskin,Person,owns_pet,pet_bramble,Bramble,Pet,false
+p_nira_tavro,Nira Tavro,Person,owns_pet,pet_tiko,Tiko,Pet,false
+p_oren_halix,Oren Halix,Person,owns_pet,pet_nema,Nema,Pet,false
+p_arlen_veyro,Arlen Veyro,Person,married_to,p_brisa_nalore,Brisa Nalore,Person,true
+p_brisa_nalore,Brisa Nalore,Person,married_to,p_arlen_veyro,Arlen Veyro,Person,true
+p_corwin_mavik,Corwin Mavik,Person,married_to,p_della_quorin,Della Quorin,Person,true
+p_della_quorin,Della Quorin,Person,married_to,p_corwin_mavik,Corwin Mavik,Person,true
+p_eron_pellis,Eron Pellis,Person,married_to,p_fia_selwick,Fia Selwick,Person,true
+p_fia_selwick,Fia Selwick,Person,married_to,p_eron_pellis,Eron Pellis,Person,true
+p_gavo_rellin,Gavo Rellin,Person,married_to,p_hessa_torvane,Hessa Torvane,Person,true
+p_hessa_torvane,Hessa Torvane,Person,married_to,p_gavo_rellin,Gavo Rellin,Person,true
+p_ivo_caldrin,Ivo Caldrin,Person,married_to,p_jessa_minlow,Jessa Minlow,Person,true
+p_jessa_minlow,Jessa Minlow,Person,married_to,p_ivo_caldrin,Ivo Caldrin,Person,true
+p_kellan_orvix,Kellan Orvix,Person,married_to,p_luma_rennic,Luma Rennic,Person,true
+p_luma_rennic,Luma Rennic,Person,married_to,p_kellan_orvix,Kellan Orvix,Person,true
+p_arlen_veyro,Arlen Veyro,Person,manages,p_eron_pellis,Eron Pellis,Person,false
+p_arlen_veyro,Arlen Veyro,Person,manages,p_ivo_caldrin,Ivo Caldrin,Person,false
+p_arlen_veyro,Arlen Veyro,Person,manages,p_maro_veskin,Maro Veskin,Person,false
+p_brisa_nalore,Brisa Nalore,Person,manages,p_gavo_rellin,Gavo Rellin,Person,false
+p_brisa_nalore,Brisa Nalore,Person,manages,p_oren_halix,Oren Halix,Person,false
+p_corwin_mavik,Corwin Mavik,Person,manages,p_fia_selwick,Fia Selwick,Person,false
+p_corwin_mavik,Corwin Mavik,Person,manages,p_jessa_minlow,Jessa Minlow,Person,false
+p_corwin_mavik,Corwin Mavik,Person,manages,p_nira_tavro,Nira Tavro,Person,false
+p_della_quorin,Della Quorin,Person,manages,p_hessa_torvane,Hessa Torvane,Person,false
+p_della_quorin,Della Quorin,Person,manages,p_luma_rennic,Luma Rennic,Person,false
+p_arlen_veyro,Arlen Veyro,Person,leads_project,project_tallowmere,Project Tallowmere,Project,false
+p_brisa_nalore,Brisa Nalore,Person,leads_project,project_glasskite,Project Glasskite,Project,false
+p_corwin_mavik,Corwin Mavik,Person,leads_project,project_emberfold,Project Emberfold,Project,false
+p_della_quorin,Della Quorin,Person,leads_project,project_rivetspool,Project Rivetspool,Project,false
+p_eron_pellis,Eron Pellis,Person,leads_project,project_tallowmere,Project Tallowmere,Project,false
+p_fia_selwick,Fia Selwick,Person,leads_project,project_glasskite,Project Glasskite,Project,false
+p_hessa_torvane,Hessa Torvane,Person,leads_project,project_rivetspool,Project Rivetspool,Project,false
+p_nira_tavro,Nira Tavro,Person,leads_project,project_moonquill,Project Moonquill,Project,false
+p_maro_veskin,Maro Veskin,Person,leads_project,project_moonquill,Project Moonquill,Project,false
+p_jessa_minlow,Jessa Minlow,Person,leads_project,project_emberfold,Project Emberfold,Project,false

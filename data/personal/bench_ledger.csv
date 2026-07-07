@@ -1,0 +1,57 @@
+doc,cid,subject,rel,object,label,mutation,original
+A,A001,Corwin Mavik,manages,Jessa Minlow,TRUE,truth,
+A,A002,Arlen Veyro,owns_pet,Bramble,TRUE,truth,
+A,A003,Gavo Rellin,lives_in,Dovemarsh,TRUE,truth,
+A,A004,Gavo Rellin,owns_pet,Bramble,TRUE,truth,
+A,A005,Corwin Mavik,joined_in,2022,TRUE,truth,
+A,A006,Oren Halix,joined_in,2022,TRUE,truth,
+A,A007,Ivo Caldrin,lives_in,Orison Vale,TRUE,truth,
+A,A008,Arlen Veyro,leads_project,Project Tallowmere,TRUE,truth,
+B,BT001,Eron Pellis,lives_in,Orison Vale,TRUE,truth,
+B,BT002,Jessa Minlow,born_in,2002,TRUE,truth,
+B,BF001,Arlen Veyro,works_at,Brindle Nacre Works,CONTRADICTED,tail_swap,Aster Quay Group
+B,BT003,Maro Veskin,joined_in,2020,TRUE,truth,
+B,BT004,Corwin Mavik,manages,Fia Selwick,TRUE,truth,
+B,BF002,Corwin Mavik,works_at,Northpass Loom Cooperative,CONTRADICTED,tail_swap,Velora Signal Team
+B,BT005,Fia Selwick,leads_project,Project Glasskite,TRUE,truth,
+B,BT006,Eron Pellis,born_in,1992,TRUE,truth,
+B,BF003,Brisa Nalore,married_to,Corwin Mavik,CONTRADICTED,tail_swap,Arlen Veyro
+B,BT007,Brisa Nalore,owns_pet,Tiko,TRUE,truth,
+B,BT008,Oren Halix,lives_in,Vesperfield,TRUE,truth,
+B,BF004,Eron Pellis,married_to,Hessa Torvane,CONTRADICTED,tail_swap,Fia Selwick
+B,BT009,Oren Halix,owns_pet,Nema,TRUE,truth,
+B,BT010,Della Quorin,manages,Hessa Torvane,TRUE,truth,
+B,BF005,Ivo Caldrin,works_at,Brindle Nacre Works,CONTRADICTED,tail_swap,Aster Quay Group
+B,BT011,Kellan Orvix,lives_in,Quillbay,TRUE,truth,
+B,BT012,Oren Halix,works_at,Brindle Nacre Works,TRUE,truth,
+B,BF006,Della Quorin,born_in,1992,CONTRADICTED,numeric,1990
+B,BT013,Hessa Torvane,lives_in,Larkhollow,TRUE,truth,
+B,BT014,Brisa Nalore,manages,Oren Halix,TRUE,truth,
+B,BF007,Fia Selwick,born_in,1996,CONTRADICTED,numeric,1994
+B,BT015,Ivo Caldrin,born_in,2000,TRUE,truth,
+B,BT016,Maro Veskin,owns_pet,Bramble,TRUE,truth,
+B,BF008,Jessa Minlow,born_in,2000,CONTRADICTED,numeric,2002
+C,CT001,Ivo Caldrin,works_at,Aster Quay Group,TRUE,truth,
+C,CT002,Gavo Rellin,married_to,Hessa Torvane,TRUE,truth,
+C,CF001,Mira Vell,works_at,Aster Quay Group,FABRICATED_ENTITY,fabricated_entity,
+C,CT003,Corwin Mavik,leads_project,Project Emberfold,TRUE,truth,
+C,CT004,Hessa Torvane,married_to,Gavo Rellin,TRUE,truth,
+C,CF002,Arlen Veyro,owns_pet,Saffo,FABRICATED_ENTITY,fabricated_entity,
+C,CT005,Corwin Mavik,manages,Nira Tavro,TRUE,truth,
+C,CT006,Della Quorin,works_at,Northpass Loom Cooperative,TRUE,truth,
+C,CF003,Luma Rennic,leads_project,Project Sunspindle,FABRICATED_ENTITY,fabricated_entity,
+C,CT007,Luma Rennic,born_in,1986,TRUE,truth,
+D,D001,Zavren Pell,works_at,Cindrel Motive Office,FABRICATED_CLUSTER,fabricated_cluster,
+D,D002,Ostia Kel,works_at,Cindrel Motive Office,FABRICATED_CLUSTER,fabricated_cluster,
+D,D003,Zavren Pell,manages,Ostia Kel,FABRICATED_CLUSTER,fabricated_cluster,
+D,D004,Ostia Kel,leads_project,Project Sablewick,FABRICATED_CLUSTER,fabricated_cluster,
+D,D005,Noll Varen,leads_project,Project Sablewick,FABRICATED_CLUSTER,fabricated_cluster,
+D,D006,Noll Varen,manages,Zavren Pell,FABRICATED_CLUSTER,fabricated_cluster,
+E,E001,Arlen V,works_at,AQG,TRUE,alias_rewrite,Arlen Veyro works_at Aster Quay Group
+E,E002,Brisa N,married_to,Arlen V,TRUE,alias_rewrite,Brisa Nalore married_to Arlen Veyro
+E,E003,Corwin M,lives_in,Quill Bay,TRUE,alias_rewrite,Corwin Mavik lives_in Quillbay
+E,E004,Della Q,joined_in,2023,TRUE,alias_rewrite,Della Quorin joined_in 2023
+E,E005,Eron P,leads_project,Tallowmere,TRUE,alias_rewrite,Eron Pellis leads_project Project Tallowmere
+E,E006,Fia S,owns_pet,Little Ruffle,TRUE,alias_rewrite,Fia Selwick owns_pet Ruffle
+E,E007,Hessa T,works_at,Northpass Loom,TRUE,alias_rewrite,Hessa Torvane works_at Northpass Loom Cooperative
+E,E008,Nira T,leads_project,Moonquill,TRUE,alias_rewrite,Nira Tavro leads_project Project Moonquill
