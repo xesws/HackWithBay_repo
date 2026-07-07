@@ -21,11 +21,13 @@
 - counterfactual/更难消融实验已按人类指示**取消**。
 
 ## 未过项 / 处置（须人类拍板 — 3 项）
-1. **RocketRide runtime 不在 live 路径**：`/verify` 当前跑**纯 Python**（`_run_direct`），非 `.pipe` 经 runtime 执行。
-   证据：`/verify/healthz → rocketride:false`；`PIPELINE_USE_ROCKETRIDE` 未设；代码 gate 默认 off。
-   `.pipe` 已写、rocketride SDK 已装、`_run_via_rocketride` 已编码但**从未对活 runtime 验证过**。
-   处置选项 → 人类定：(a) 打开并验证真 runtime 路径；(b) 诚实表述“已定义 RocketRide pipeline + 自托管 runtime 可用，直连执行为 active fallback”（decisions #0 已豁免 Cloud）。**建议 (b)**（低风险，不动活 demo）。
-2. ~~**credit gate 仍 stub**~~ **✅ 已接线（LIVE）**：`/verify` 走真 `consume_credit`（JWT 转发；fn 是 auth:required 拒 service key）；fail-open 保活 demo。demo 号已 e2e 验证：`demo-999`(999→998 扣费) / `demo-empty`(insufficient_credits 拦截)。**遗留决策**：新注册号默认 0 余额→会被拦；是否给新号发 N 张免费额度（需 signup hook）由你定。
+1. ~~**RocketRide runtime 不在 live 路径**~~ **✅ 已验证并定案（采用 b）**：flip 测试结论 —
+   `_run_via_rocketride` 在隔离测试中 **1.1s 抛 `AuthenticationException: No authorization provided`** →
+   verify.py 捕获 → 回退 `_run_direct`。原因:pod 上**没有自托管 RocketRide runtime**(B1 卡在
+   Shape 1/2 边界未完成)+ 无 runtime auth。故 `PIPELINE_USE_ROCKETRIDE` 保持 **off**(诚实:healthz
+   rocketride:false + 无每次 1s 失败开销)。表述定为 **(b)**:"已定义 RocketRide `.pipe` + 自托管
+   runtime 就绪路径,直连 Python 为 active 执行(decisions #0 Cloud 豁免)"。要真跑 runtime = 补 B1。
+2. ~~**credit gate 仍 stub**~~ **✅ 已接线（LIVE）**：`/verify` 走真 `consume_credit`（JWT 转发；fn 是 auth:required 拒 service key）；fail-open 保活 demo。demo 号已 e2e 验证：`demo-999`(999→998 扣费) / `demo-empty`(insufficient_credits 拦截)。**遗留决策 → 已裁决关闭**：不做 signup 免费额度 hook;新注册号默认 0 余额(设计如此),演示一律用 `docs/DEMO.md` 提供的 demo 账号。
 3. **decisions #0 的 Discord receipt** 仍为 `<粘贴原文>` 占位：sponsor-comms 属人类边界，须你粘贴 Krish Garg 11:42 / Joe Maionchi 11:47 原文。
 
 ## 契约变更记录（本版）
