@@ -1,7 +1,31 @@
-import { useEffect, useState } from "react";
-import Constellation from "./Constellation";
+import { useEffect, useState, lazy, Suspense, Component, type ReactNode } from "react";
 import { fetchVerdict, fetchBalance, type Verdict } from "./api";
 import { getSession, signIn, signUp, signOut, type Session } from "./auth";
+
+// Code-split the heavy force-graph lib (~750KB) out of the critical path so the
+// app shell paints immediately instead of white-screening while it downloads.
+const Constellation = lazy(() => import("./Constellation"));
+
+// Never let a runtime error in the graph blank the whole app to white.
+class GraphBoundary extends Component<{ children: ReactNode }, { error: any }> {
+  constructor(props: any) {
+    super(props);
+    this.state = { error: null };
+  }
+  static getDerivedStateFromError(error: any) {
+    return { error };
+  }
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="loading" style={{ color: "#fca5a5", textAlign: "center", padding: 24 }}>
+          constellation failed to render — {String(this.state.error?.message ?? this.state.error)}
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const LEGEND = [
   { hex: "#22c55e", label: "SUPPORTED", sub: "grounded core" },
@@ -233,7 +257,7 @@ export default function App() {
         </span>
         <textarea
           className="input-box"
-          placeholder="Paste an LLM answer about the AI industry (with planted errors), then Verify…"
+          placeholder="Paste a paragraph about people — who they work for, where they live, who they manage, their projects — then Verify…"
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={3}
@@ -253,7 +277,11 @@ export default function App() {
       <main className="stage">
         <section className="graph-col">
           {verdict ? (
-            <Constellation verdict={verdict} selectedId={selected?.id ?? null} onSelect={setSelected} />
+            <GraphBoundary>
+              <Suspense fallback={<div className="loading">rendering constellation…</div>}>
+                <Constellation verdict={verdict} selectedId={selected?.id ?? null} onSelect={setSelected} />
+              </Suspense>
+            </GraphBoundary>
           ) : (
             <div className="loading">loading verdict…</div>
           )}

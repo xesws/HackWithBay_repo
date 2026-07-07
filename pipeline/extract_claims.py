@@ -36,7 +36,20 @@ HERE = Path(__file__).resolve().parent
 DEFAULT_LEDGER = ROOT / "data" / "bench" / "bench_ledger.csv"
 DEFAULT_DOCS = ROOT / "data" / "bench" / "docs"
 CLAIMS_SCHEMA = HERE / "schemas" / "claims.schema.json"
-PROMPT_PATH = HERE / "prompts" / "extract_claims.md"
+# Domain-selectable extraction prompt (contracts §4.1 v1.2 / decisions #2): each
+# domain defines its own vocab in its prompt. EXTRACT_PROMPT_PATH overrides the
+# default AI-domain prompt (e.g. prompts/extract_claims_personal.md for Eval-2).
+
+
+def prompt_path() -> Path:
+    override = os.environ.get("EXTRACT_PROMPT_PATH")
+    if override:
+        p = Path(override)
+        return p if p.is_absolute() else (ROOT / p)
+    return HERE / "prompts" / "extract_claims.md"
+
+
+PROMPT_PATH = HERE / "prompts" / "extract_claims.md"  # default (AI domain)
 
 ATTRS = {"release_year", "param_count_b", "context_window_k"}
 
@@ -54,6 +67,15 @@ _PATTERNS: list[tuple[re.Pattern[str], str, str, bool]] = [
     (re.compile(r"^(?P<s>.+?) has (?P<o>\d+) billion parameters$"), "attribute", "param_count_b", True),
     # "was released in <year>" is surface-ambiguous; default to relational released_in.
     (re.compile(r"^(?P<s>.+?) was released in (?P<o>.+)$"), "relational", "released_in", False),
+    # --- personal domain (Eval-2): all relational, object is a string (years too) ---
+    (re.compile(r"^(?P<s>.+?) works at (?P<o>.+)$"), "relational", "works_at", False),
+    (re.compile(r"^(?P<s>.+?) lives in (?P<o>.+)$"), "relational", "lives_in", False),
+    (re.compile(r"^(?P<s>.+?) is married to (?P<o>.+)$"), "relational", "married_to", False),
+    (re.compile(r"^(?P<s>.+?) manages (?P<o>.+)$"), "relational", "manages", False),
+    (re.compile(r"^(?P<s>.+?) owns a pet named (?P<o>.+)$"), "relational", "owns_pet", False),
+    (re.compile(r"^(?P<s>.+?) joined in (?P<o>.+)$"), "relational", "joined_in", False),
+    (re.compile(r"^(?P<s>.+?) was born in (?P<o>.+)$"), "relational", "born_in", False),
+    (re.compile(r"^(?P<s>.+?) leads (?P<o>.+)$"), "relational", "leads_project", False),
 ]
 
 
@@ -113,7 +135,7 @@ def call_model_llm(text: str) -> str:  # pragma: no cover - needs a live key
     """
     from pipeline.llm import openrouter_chat  # local import: only needed on the LLM path
 
-    prompt = PROMPT_PATH.read_text(encoding="utf-8")
+    prompt = prompt_path().read_text(encoding="utf-8")  # domain-selectable (EXTRACT_PROMPT_PATH)
     messages = [
         {"role": "system", "content": prompt},
         {"role": "user", "content": text},

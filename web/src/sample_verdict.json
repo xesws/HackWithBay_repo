@@ -1,127 +1,578 @@
 {
-  "job_id": "j_sample_001",
-  "doc_score": 0.28,
+  "job_id": "personal_sample_001",
+  "doc_score": 0.5833,
   "claims": [
     {
       "cid": "c1",
       "kind": "relational",
-      "text": "Claude was developed by Anthropic.",
+      "text": "Corwin Mavik manages Jessa Minlow.",
       "status": "SUPPORTED",
       "cluster_flag": false,
       "grounding_ratio": 1.0,
       "dist_to_core": 0,
       "evidence": {
         "type": "support",
-        "truth": "Anthropic",
-        "path": ["Claude", "developed_by", "Anthropic"]
+        "truth": "Jessa Minlow",
+        "path": [
+          "Corwin Mavik",
+          "manages",
+          "Jessa Minlow"
+        ]
       }
     },
     {
       "cid": "c2",
       "kind": "relational",
-      "text": "GPT-4 was developed by Google.",
+      "text": "Arlen Veyro owns a pet named Bramble.",
+      "status": "SUPPORTED",
+      "cluster_flag": false,
+      "grounding_ratio": 1.0,
+      "dist_to_core": 0,
+      "evidence": {
+        "type": "support",
+        "truth": "Bramble",
+        "path": [
+          "Arlen Veyro",
+          "owns_pet",
+          "Bramble"
+        ]
+      }
+    },
+    {
+      "cid": "c3",
+      "kind": "relational",
+      "text": "Gavo Rellin lives in Dovemarsh.",
+      "status": "SUPPORTED",
+      "cluster_flag": false,
+      "grounding_ratio": 1.0,
+      "dist_to_core": 0,
+      "evidence": {
+        "type": "support",
+        "truth": "Dovemarsh",
+        "path": [
+          "Gavo Rellin",
+          "lives_in",
+          "Dovemarsh"
+        ]
+      }
+    },
+    {
+      "cid": "c4",
+      "kind": "relational",
+      "text": "Della Quorin was born in 1992.",
       "status": "CONTRADICTED",
       "cluster_flag": false,
       "grounding_ratio": 1.0,
       "dist_to_core": 0,
       "evidence": {
         "type": "conflict",
-        "truth": "OpenAI",
-        "path": ["GPT-4", "developed_by", "OpenAI"]
-      }
-    },
-    {
-      "cid": "c3",
-      "kind": "relational",
-      "text": "Zephyr-9000 is a large language model.",
-      "status": "UNGROUNDED",
-      "cluster_flag": false,
-      "grounding_ratio": 0.0,
-      "dist_to_core": null,
-      "evidence": {
-        "type": "orphan",
-        "truth": null,
-        "path": ["Zephyr-9000"]
-      }
-    },
-    {
-      "cid": "c4",
-      "kind": "relational",
-      "text": "Nyxa-7B was developed by Aether Labs.",
-      "status": "UNGROUNDED",
-      "cluster_flag": true,
-      "grounding_ratio": 0.0,
-      "dist_to_core": null,
-      "evidence": {
-        "type": "fabricated_cluster",
-        "truth": null,
-        "path": ["Nyxa-7B", "developed_by", "Aether Labs"]
+        "truth": "1990",
+        "path": [
+          "Della Quorin",
+          "born_in",
+          "1990"
+        ]
       }
     },
     {
       "cid": "c5",
       "kind": "relational",
-      "text": "Nyxa-7B reached state of the art on GLUE-X.",
-      "status": "UNGROUNDED",
-      "cluster_flag": true,
-      "grounding_ratio": 0.0,
-      "dist_to_core": null,
+      "text": "Brisa Nalore is married to Corwin Mavik.",
+      "status": "CONTRADICTED",
+      "cluster_flag": false,
+      "grounding_ratio": 1.0,
+      "dist_to_core": 0,
       "evidence": {
-        "type": "fabricated_cluster",
-        "truth": null,
-        "path": ["Nyxa-7B", "sota_on", "GLUE-X"]
+        "type": "conflict",
+        "truth": "Arlen Veyro",
+        "path": [
+          "Brisa Nalore",
+          "married_to",
+          "Arlen Veyro"
+        ]
       }
     },
     {
       "cid": "c6",
       "kind": "relational",
-      "text": "The GLUE-X benchmark was authored by J. Fictus.",
+      "text": "Mira Vell works at Aster Quay Group.",
+      "status": "UNGROUNDED",
+      "cluster_flag": false,
+      "grounding_ratio": 0.5,
+      "dist_to_core": 0,
+      "evidence": {
+        "type": "ungrounded",
+        "truth": null,
+        "path": []
+      }
+    },
+    {
+      "cid": "c7",
+      "kind": "relational",
+      "text": "Zavren Pell works at Cindrel Motive Office.",
       "status": "UNGROUNDED",
       "cluster_flag": true,
       "grounding_ratio": 0.0,
       "dist_to_core": null,
       "evidence": {
-        "type": "fabricated_cluster",
+        "type": "ungrounded",
         "truth": null,
-        "path": ["GLUE-X", "authored_by", "J. Fictus"]
+        "path": []
+      }
+    },
+    {
+      "cid": "c8",
+      "kind": "relational",
+      "text": "Ostia Kel works at Cindrel Motive Office.",
+      "status": "UNGROUNDED",
+      "cluster_flag": true,
+      "grounding_ratio": 0.0,
+      "dist_to_core": null,
+      "evidence": {
+        "type": "ungrounded",
+        "truth": null,
+        "path": []
+      }
+    },
+    {
+      "cid": "c9",
+      "kind": "relational",
+      "text": "Zavren Pell manages Ostia Kel.",
+      "status": "UNGROUNDED",
+      "cluster_flag": true,
+      "grounding_ratio": 0.0,
+      "dist_to_core": null,
+      "evidence": {
+        "type": "ungrounded",
+        "truth": null,
+        "path": []
+      }
+    },
+    {
+      "cid": "c10",
+      "kind": "relational",
+      "text": "Ostia Kel leads Project Sablewick.",
+      "status": "UNGROUNDED",
+      "cluster_flag": true,
+      "grounding_ratio": 0.0,
+      "dist_to_core": null,
+      "evidence": {
+        "type": "ungrounded",
+        "truth": null,
+        "path": []
+      }
+    },
+    {
+      "cid": "c11",
+      "kind": "relational",
+      "text": "Noll Varen leads Project Sablewick.",
+      "status": "UNGROUNDED",
+      "cluster_flag": true,
+      "grounding_ratio": 0.0,
+      "dist_to_core": null,
+      "evidence": {
+        "type": "ungrounded",
+        "truth": null,
+        "path": []
+      }
+    },
+    {
+      "cid": "c12",
+      "kind": "relational",
+      "text": "Noll Varen manages Zavren Pell.",
+      "status": "UNGROUNDED",
+      "cluster_flag": true,
+      "grounding_ratio": 0.0,
+      "dist_to_core": null,
+      "evidence": {
+        "type": "ungrounded",
+        "truth": null,
+        "path": []
       }
     }
   ],
   "graph": {
     "nodes": [
-      { "id": "ent:claude", "label": "Claude", "kind": "entity", "color": "green" },
-      { "id": "ent:anthropic", "label": "Anthropic", "kind": "entity", "color": "green" },
-      { "id": "ent:gpt4", "label": "GPT-4", "kind": "entity", "color": "green" },
-      { "id": "ent:openai", "label": "OpenAI", "kind": "entity", "color": "green" },
-      { "id": "ent:mmlu", "label": "MMLU", "kind": "entity", "color": "green" },
-      { "id": "claim:c1", "label": "Claude → developed_by → Anthropic", "kind": "claim", "color": "green" },
-      { "id": "claim:c2", "label": "GPT-4 → developed_by → Google", "kind": "claim", "color": "red" },
-      { "id": "ent:google", "label": "Google", "kind": "entity", "color": "red" },
-      { "id": "claim:c3", "label": "Zephyr-9000 is an LLM", "kind": "claim", "color": "gray" },
-      { "id": "ent:zephyr", "label": "Zephyr-9000", "kind": "entity", "color": "gray" },
-      { "id": "claim:c4", "label": "Nyxa-7B → developed_by → Aether Labs", "kind": "claim", "color": "orange" },
-      { "id": "claim:c5", "label": "Nyxa-7B → sota_on → GLUE-X", "kind": "claim", "color": "orange" },
-      { "id": "claim:c6", "label": "GLUE-X → authored_by → J. Fictus", "kind": "claim", "color": "orange" },
-      { "id": "ent:nyxa", "label": "Nyxa-7B", "kind": "entity", "color": "orange" },
-      { "id": "ent:aether", "label": "Aether Labs", "kind": "entity", "color": "orange" },
-      { "id": "ent:gluex", "label": "GLUE-X", "kind": "entity", "color": "orange" },
-      { "id": "ent:fictus", "label": "J. Fictus", "kind": "entity", "color": "orange" }
+      {
+        "id": "claim:c1",
+        "label": "Corwin Mavik → manages → Jessa Minlow",
+        "kind": "claim",
+        "color": "green"
+      },
+      {
+        "id": "ent:p_corwin_mavik",
+        "label": "Corwin Mavik",
+        "kind": "entity",
+        "color": "green"
+      },
+      {
+        "id": "ent:p_jessa_minlow",
+        "label": "Jessa Minlow",
+        "kind": "entity",
+        "color": "green"
+      },
+      {
+        "id": "claim:c2",
+        "label": "Arlen Veyro → owns_pet → Bramble",
+        "kind": "claim",
+        "color": "green"
+      },
+      {
+        "id": "ent:p_arlen_veyro",
+        "label": "Arlen Veyro",
+        "kind": "entity",
+        "color": "green"
+      },
+      {
+        "id": "ent:pet_bramble",
+        "label": "Bramble",
+        "kind": "entity",
+        "color": "green"
+      },
+      {
+        "id": "claim:c3",
+        "label": "Gavo Rellin → lives_in → Dovemarsh",
+        "kind": "claim",
+        "color": "green"
+      },
+      {
+        "id": "ent:p_gavo_rellin",
+        "label": "Gavo Rellin",
+        "kind": "entity",
+        "color": "green"
+      },
+      {
+        "id": "ent:city_dovemarsh",
+        "label": "Dovemarsh",
+        "kind": "entity",
+        "color": "green"
+      },
+      {
+        "id": "claim:c4",
+        "label": "Della Quorin → born_in → 1992",
+        "kind": "claim",
+        "color": "red"
+      },
+      {
+        "id": "ent:p_della_quorin",
+        "label": "Della Quorin",
+        "kind": "entity",
+        "color": "green"
+      },
+      {
+        "id": "ent:year_1992",
+        "label": "1992",
+        "kind": "entity",
+        "color": "green"
+      },
+      {
+        "id": "claim:c5",
+        "label": "Brisa Nalore → married_to → Corwin Mavik",
+        "kind": "claim",
+        "color": "red"
+      },
+      {
+        "id": "ent:p_brisa_nalore",
+        "label": "Brisa Nalore",
+        "kind": "entity",
+        "color": "green"
+      },
+      {
+        "id": "claim:c6",
+        "label": "Mira Vell → works_at → Aster Quay Group",
+        "kind": "claim",
+        "color": "gray"
+      },
+      {
+        "id": "mention:mira-vell",
+        "label": "Mira Vell",
+        "kind": "mention",
+        "color": "gray"
+      },
+      {
+        "id": "ent:org_aster_quay_group",
+        "label": "Aster Quay Group",
+        "kind": "entity",
+        "color": "green"
+      },
+      {
+        "id": "claim:c7",
+        "label": "Zavren Pell → works_at → Cindrel Motive Office",
+        "kind": "claim",
+        "color": "orange"
+      },
+      {
+        "id": "mention:zavren-pell",
+        "label": "Zavren Pell",
+        "kind": "mention",
+        "color": "orange"
+      },
+      {
+        "id": "mention:cindrel-motive-office",
+        "label": "Cindrel Motive Office",
+        "kind": "mention",
+        "color": "orange"
+      },
+      {
+        "id": "claim:c8",
+        "label": "Ostia Kel → works_at → Cindrel Motive Office",
+        "kind": "claim",
+        "color": "orange"
+      },
+      {
+        "id": "mention:ostia-kel",
+        "label": "Ostia Kel",
+        "kind": "mention",
+        "color": "orange"
+      },
+      {
+        "id": "claim:c9",
+        "label": "Zavren Pell → manages → Ostia Kel",
+        "kind": "claim",
+        "color": "orange"
+      },
+      {
+        "id": "claim:c10",
+        "label": "Ostia Kel → leads_project → Project Sablewick",
+        "kind": "claim",
+        "color": "orange"
+      },
+      {
+        "id": "mention:project-sablewick",
+        "label": "Project Sablewick",
+        "kind": "mention",
+        "color": "orange"
+      },
+      {
+        "id": "claim:c11",
+        "label": "Noll Varen → leads_project → Project Sablewick",
+        "kind": "claim",
+        "color": "orange"
+      },
+      {
+        "id": "mention:noll-varen",
+        "label": "Noll Varen",
+        "kind": "mention",
+        "color": "orange"
+      },
+      {
+        "id": "claim:c12",
+        "label": "Noll Varen → manages → Zavren Pell",
+        "kind": "claim",
+        "color": "orange"
+      }
     ],
     "edges": [
-      { "src": "ent:claude", "dst": "claim:c1", "rel": "subject", "status": "supported" },
-      { "src": "claim:c1", "dst": "ent:anthropic", "rel": "developed_by", "status": "supported" },
-      { "src": "ent:claude", "dst": "ent:mmlu", "rel": "evaluated_on", "status": "supported" },
-      { "src": "ent:gpt4", "dst": "ent:mmlu", "rel": "evaluated_on", "status": "supported" },
-      { "src": "ent:gpt4", "dst": "ent:openai", "rel": "developed_by", "status": "supported" },
-      { "src": "ent:gpt4", "dst": "claim:c2", "rel": "subject", "status": "contradicted" },
-      { "src": "claim:c2", "dst": "ent:google", "rel": "developed_by", "status": "contradicted" },
-      { "src": "ent:zephyr", "dst": "claim:c3", "rel": "subject", "status": "ungrounded" },
-      { "src": "ent:nyxa", "dst": "claim:c4", "rel": "subject", "status": "ungrounded" },
-      { "src": "claim:c4", "dst": "ent:aether", "rel": "developed_by", "status": "ungrounded" },
-      { "src": "ent:nyxa", "dst": "claim:c5", "rel": "subject", "status": "ungrounded" },
-      { "src": "claim:c5", "dst": "ent:gluex", "rel": "sota_on", "status": "ungrounded" },
-      { "src": "ent:gluex", "dst": "claim:c6", "rel": "subject", "status": "ungrounded" },
-      { "src": "claim:c6", "dst": "ent:fictus", "rel": "authored_by", "status": "ungrounded" }
+      {
+        "src": "claim:c1",
+        "dst": "ent:p_corwin_mavik",
+        "rel": "SUBJ",
+        "status": "supported"
+      },
+      {
+        "src": "claim:c1",
+        "dst": "ent:p_jessa_minlow",
+        "rel": "manages",
+        "status": "supported"
+      },
+      {
+        "src": "claim:c2",
+        "dst": "ent:p_arlen_veyro",
+        "rel": "SUBJ",
+        "status": "supported"
+      },
+      {
+        "src": "claim:c2",
+        "dst": "ent:pet_bramble",
+        "rel": "owns_pet",
+        "status": "supported"
+      },
+      {
+        "src": "claim:c3",
+        "dst": "ent:p_gavo_rellin",
+        "rel": "SUBJ",
+        "status": "supported"
+      },
+      {
+        "src": "claim:c3",
+        "dst": "ent:city_dovemarsh",
+        "rel": "lives_in",
+        "status": "supported"
+      },
+      {
+        "src": "claim:c4",
+        "dst": "ent:p_della_quorin",
+        "rel": "SUBJ",
+        "status": "contradicted"
+      },
+      {
+        "src": "claim:c4",
+        "dst": "ent:year_1992",
+        "rel": "born_in",
+        "status": "contradicted"
+      },
+      {
+        "src": "claim:c5",
+        "dst": "ent:p_brisa_nalore",
+        "rel": "SUBJ",
+        "status": "contradicted"
+      },
+      {
+        "src": "claim:c5",
+        "dst": "ent:p_corwin_mavik",
+        "rel": "married_to",
+        "status": "contradicted"
+      },
+      {
+        "src": "claim:c6",
+        "dst": "mention:mira-vell",
+        "rel": "SUBJ",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c6",
+        "dst": "ent:org_aster_quay_group",
+        "rel": "works_at",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c7",
+        "dst": "mention:zavren-pell",
+        "rel": "SUBJ",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c7",
+        "dst": "mention:cindrel-motive-office",
+        "rel": "works_at",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c8",
+        "dst": "mention:ostia-kel",
+        "rel": "SUBJ",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c8",
+        "dst": "mention:cindrel-motive-office",
+        "rel": "works_at",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c9",
+        "dst": "mention:zavren-pell",
+        "rel": "SUBJ",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c9",
+        "dst": "mention:ostia-kel",
+        "rel": "manages",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c10",
+        "dst": "mention:ostia-kel",
+        "rel": "SUBJ",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c10",
+        "dst": "mention:project-sablewick",
+        "rel": "leads_project",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c11",
+        "dst": "mention:noll-varen",
+        "rel": "SUBJ",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c11",
+        "dst": "mention:project-sablewick",
+        "rel": "leads_project",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c12",
+        "dst": "mention:noll-varen",
+        "rel": "SUBJ",
+        "status": "ungrounded"
+      },
+      {
+        "src": "claim:c12",
+        "dst": "mention:zavren-pell",
+        "rel": "manages",
+        "status": "ungrounded"
+      },
+      {
+        "src": "ent:p_brisa_nalore",
+        "dst": "ent:p_arlen_veyro",
+        "rel": "married_to",
+        "status": "supported"
+      },
+      {
+        "src": "ent:p_brisa_nalore",
+        "dst": "ent:p_gavo_rellin",
+        "rel": "manages",
+        "status": "supported"
+      },
+      {
+        "src": "ent:p_gavo_rellin",
+        "dst": "ent:city_dovemarsh",
+        "rel": "lives_in",
+        "status": "supported"
+      },
+      {
+        "src": "ent:p_gavo_rellin",
+        "dst": "ent:pet_bramble",
+        "rel": "owns_pet",
+        "status": "supported"
+      },
+      {
+        "src": "ent:p_della_quorin",
+        "dst": "ent:p_corwin_mavik",
+        "rel": "married_to",
+        "status": "supported"
+      },
+      {
+        "src": "ent:p_arlen_veyro",
+        "dst": "ent:org_aster_quay_group",
+        "rel": "works_at",
+        "status": "supported"
+      },
+      {
+        "src": "ent:p_arlen_veyro",
+        "dst": "ent:p_brisa_nalore",
+        "rel": "married_to",
+        "status": "supported"
+      },
+      {
+        "src": "ent:p_arlen_veyro",
+        "dst": "ent:pet_bramble",
+        "rel": "owns_pet",
+        "status": "supported"
+      },
+      {
+        "src": "ent:p_arlen_veyro",
+        "dst": "ent:city_dovemarsh",
+        "rel": "lives_in",
+        "status": "supported"
+      },
+      {
+        "src": "ent:p_corwin_mavik",
+        "dst": "ent:p_jessa_minlow",
+        "rel": "manages",
+        "status": "supported"
+      },
+      {
+        "src": "ent:p_corwin_mavik",
+        "dst": "ent:p_della_quorin",
+        "rel": "married_to",
+        "status": "supported"
+      }
     ]
   }
 }
