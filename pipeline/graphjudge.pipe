@@ -38,13 +38,13 @@
         "id": "extract_claims",
         "provider": "python",
         "name": "extract_claims (§4.1)",
-        "description": "prose text -> §4.1 claims JSON. DEFAULT = deterministic offline regex extractor (no LLM key). LLM upgrade seam via GATEWAY_API_KEY (call_model_llm).",
+        "description": "prose text -> §4.1 claims JSON. DEFAULT = deterministic offline regex extractor (no LLM key). LLM upgrade = OpenRouter (z-ai/glm-5.2) via pipeline.llm, keyed by OPENROUTER_API_KEY.",
         "config": {
           "entry": "pipeline.extract_claims:extract_claims",
           "args": { "job_id": "$.job_id", "text": "$.text", "validate": true },
-          "model": "offline",
-          "env": ["GATEWAY_API_KEY"],
-          "_note": "Set model=llm + a funded GATEWAY_API_KEY to use call_model_llm; offline regex is the default so the pipeline works with NO key."
+          "model": "auto",
+          "env": ["OPENROUTER_API_KEY"],
+          "_note": "model=auto -> OpenRouter z-ai/glm-5.2 when OPENROUTER_API_KEY is set, else the offline regex extractor, so the pipeline works with NO key. All LLM calls go through OpenRouter (never Anthropic/OpenAI)."
         },
         "input": [{ "from": "credit_gate", "lane": "ok" }]
       },

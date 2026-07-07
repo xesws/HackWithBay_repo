@@ -89,7 +89,9 @@ def _run_direct(job_id: str, text: str) -> dict[str, Any]:
     from scorer.models import ScoreRequest
     from scorer.scoring import score_job
 
-    payload = extract_claims(job_id, text, validate=True)  # §4.1 (regex default)
+    # §4.1: auto-selects OpenRouter (z-ai/glm-5.2) when OPENROUTER_API_KEY is set,
+    # else the deterministic offline regex extractor (works with no key).
+    payload = extract_claims(job_id, text, validate=True)
     request = ScoreRequest(job_id=job_id, claims=payload["claims"])
     verdict = score_job(request, _reference())  # §4.2 (real scoring)
     return verdict.model_dump()

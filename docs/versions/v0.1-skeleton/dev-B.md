@@ -107,6 +107,12 @@ GATEWAY_API_KEY=... .venv/bin/python -m pipeline.extract_claims --doc all --mode
   scorer seam 仍 `POST {SCORER_URL}/score`(真)否则 mock。healthz 增 `credit_backend`。
 - `pipeline/PHASE2_CHECKLIST.md`: pod 放锁后 (a)-(f) 有序步骤(改 app.py 两行 / .env / 重启 8888 /
   curl /verify 断言 §4.2 / SPA 指向 /verify 重建 / consume_credit+persist 接线)。
+- **LLM provider = OpenRouter(人类裁决, 覆盖 §4.7 GATEWAY_API_KEY)**: 新增 `pipeline/llm.py`
+  `openrouter_chat(messages, model="z-ai/glm-5.2")`(base `https://openrouter.ai/api/v1`, OpenAI-compatible,
+  优先 `openai` client 否则 urllib, 读 `OPENROUTER_API_KEY`)。`extract_claims.call_model_llm` 改走它
+  (prompt 作 system, doc 作 user); 新增 `default_model()` = key 置位→LLM 否则离线 regex;
+  `extract_claims(model=None)` 自动选择; CLI 加 `--model auto`。`.pipe` extract 步 env 改 `OPENROUTER_API_KEY`
+  (model=auto)。**丢弃全部 anthropic/openai 直连路径**。key 仍可空(NEEDS-HUMAN), 无 key 时离线 regex 兜底。
 
 验证(实际命令 + 实际输出, 全部离线, 用绝对路径 venv):
 - `py_compile scorer/verify.py pipeline/webhook.py pipeline/credits.py` → OK。

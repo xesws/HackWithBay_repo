@@ -41,6 +41,9 @@ PIPELINE_WEBHOOK_URL=https://ohld8gp5nmkcu7-8888.proxy.runpod.net/verify
 # PERSIST_RESULT_URL=<butterbase persist_result fn URL>
 # BUTTERBASE_API_KEY=bb_sk_...            # service secret, server-side only
 # PIPELINE_USE_ROCKETRIDE=1               # opt into the SDK path (§d); omit = direct path
+# OPENROUTER_API_KEY=sk-or-...            # LLM extraction upgrade (z-ai/glm-5.2 via
+#                                         # OpenRouter). UNSET -> offline regex extractor
+#                                         # (default; pipeline works with no LLM key).
 ```
 `SCORER_URL`, `BUTTERBASE_URL`, `BUTTERBASE_API_KEY` already exist (contracts §4.7).
 The scorer/verify direct path needs NONE of these to return a real §4.2 verdict.
