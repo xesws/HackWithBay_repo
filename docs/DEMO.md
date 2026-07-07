@@ -63,6 +63,22 @@ Corwin Mavik manages Jessa Minlow. Arlen Veyro owns a pet named Bramble. Gavo Re
 核心主张:**我们用图判 LLM,而不是用 LLM 判 LLM** —— 判定确定性、可审计
 (每条判定带图路径证据)、核心链路无 LLM。
 
+## 6. 故障自救:Verify 报错 / 连不上服务器
+
+打分服务(scorer)跑在 pod 的 `:8888`。若 Verify 一直转圈或报网络错,多半是
+scorer 挂了(比如 pod 重启)。**一条命令拉起来**(在 Claude Code 输入框里前面加 `!`,
+或直接在 pod 终端跑):
+
+```
+! bash scripts/run_scorer.sh
+```
+
+看到 `scorer UP: {... "entities":51,"facts":107 ...}` 就恢复了(个人域已就位)。
+日志在 `scorer.log`。健康检查:`curl -s http://127.0.0.1:8888/health`。
+
+> scorer 用 `setsid`+`nohup` 独立会话启动,正常情况下会随 pod 一直活着;
+> 上面这条只是万一它没了时的一键重启。
+
 ---
 
 *参考图当前载入的是 Eval-2「个人域」基准(51 实体 / 107 事实)。AI 域记分牌
