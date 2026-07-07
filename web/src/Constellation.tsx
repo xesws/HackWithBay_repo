@@ -53,7 +53,7 @@ export default function Constellation({ verdict, selectedId, onSelect }: Props) 
         width={dims.w}
         height={dims.h}
         graphData={data}
-        backgroundColor="#0b1020"
+        backgroundColor="rgba(0,0,0,0)"
         cooldownTicks={120}
         nodeRelSize={6}
         linkColor={(l: any) => LINK_HEX[l.status] || "#4b5563"}
@@ -61,11 +61,21 @@ export default function Constellation({ verdict, selectedId, onSelect }: Props) 
         linkLineDash={(l: any) => (l.status === "ungrounded" ? [4, 3] : null)}
         linkDirectionalArrowLength={4}
         linkDirectionalArrowRelPos={1}
+        linkDirectionalParticles={(l: any) => (l.status === "contradicted" ? 2 : 0)}
+        linkDirectionalParticleWidth={2.2}
+        linkDirectionalParticleSpeed={0.006}
+        linkDirectionalParticleColor={() => "#ef4444"}
         onNodeClick={(n: any) => onSelect(n)}
         nodeCanvasObject={(node: any, ctx: any, scale: number) => {
           const isClaim = String(node.id).startsWith("claim:");
-          const r = isClaim ? 5 : 6.5;
+          const r = isClaim ? 5.2 : 6.8;
           const hex = COLOR_HEX[node.color] || "#9ca3af";
+          const selected = node.id === selectedId;
+
+          // luminous "constellation" glow — halo scales with selection
+          ctx.save();
+          ctx.shadowColor = hex;
+          ctx.shadowBlur = (selected ? 22 : 12) / Math.max(scale, 0.6);
           ctx.beginPath();
           if (isClaim) {
             // draw claims as diamonds to distinguish them from entities
@@ -79,19 +89,25 @@ export default function Constellation({ verdict, selectedId, onSelect }: Props) 
           }
           ctx.fillStyle = hex;
           ctx.fill();
-          if (node.id === selectedId) {
-            ctx.lineWidth = 2.5 / scale;
-            ctx.strokeStyle = "#ffffff";
+          ctx.restore();
+
+          if (selected) {
+            // accent selection ring (no shadow) around the node
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, r + 4 / scale, 0, 2 * Math.PI);
+            ctx.lineWidth = 1.6 / scale;
+            ctx.strokeStyle = "#4d82ff";
             ctx.stroke();
           }
+
           const label = node.label ?? node.id;
           const fs = Math.max(3, 11 / scale);
-          ctx.font = `${fs}px system-ui, -apple-system, sans-serif`;
-          ctx.fillStyle = "#cbd5e1";
+          ctx.font = `${fs}px Inter, system-ui, -apple-system, sans-serif`;
+          ctx.fillStyle = selected ? "#e8ecf6" : "#9aa7c4";
           ctx.textAlign = "center";
           ctx.textBaseline = "top";
           const short = label.length > 42 ? label.slice(0, 40) + "…" : label;
-          ctx.fillText(short, node.x, node.y + r + 2);
+          ctx.fillText(short, node.x, node.y + r + 3);
         }}
         nodePointerAreaPaint={(node: any, color: string, ctx: any) => {
           ctx.fillStyle = color;

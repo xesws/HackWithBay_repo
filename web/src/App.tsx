@@ -225,17 +225,26 @@ export default function App() {
         )}
       </div>
 
-      <section style={{ padding: "0 20px 12px", display: "flex", flexDirection: "column", gap: 8 }}>
+      <section className="input-section">
+        <span className="rail">
+          <span className="idx">01</span>
+          <span className="sep">/</span>
+          <span>submit claim text</span>
+        </span>
         <textarea
+          className="input-box"
           placeholder="Paste an LLM answer about the AI industry (with planted errors), then Verify…"
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={3}
-          style={{ width: "100%", background: "#0f1117", color: "#e5e7eb", border: "1px solid #333", borderRadius: 8, padding: 10, fontFamily: "inherit", fontSize: 14, resize: "vertical", boxSizing: "border-box" }}
         />
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <button className="primary" onClick={verify} disabled={busy || !text.trim()} style={{ width: "auto", padding: "8px 18px" }}>
-            {busy ? "scoring…" : "Verify"}
+        <div className="input-actions">
+          <button
+            className={busy ? "verify-btn busy" : "verify-btn"}
+            onClick={verify}
+            disabled={busy || !text.trim()}
+          >
+            {busy ? "scoring…" : "verify"}
           </button>
           {err && <span className="err">{err}</span>}
         </div>
@@ -250,6 +259,11 @@ export default function App() {
           )}
         </section>
         <aside className="side-col">
+          <span className="rail" style={{ marginBottom: 14 }}>
+            <span className="idx">02</span>
+            <span className="sep">/</span>
+            <span>evidence</span>
+          </span>
           {verdict && <EvidencePanel verdict={verdict} selected={selected} />}
         </aside>
       </main>
