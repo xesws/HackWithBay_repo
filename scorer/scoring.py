@@ -300,6 +300,7 @@ def score_job(request: ScoreRequest, ref: ReferenceGraph) -> ScoreResponse:
         verdicts.append(
             ClaimVerdict(
                 cid=judged.claim.cid,
+                text=judged.claim.text,
                 status=status,
                 cluster_flag=cluster_flag,
                 grounding_ratio=round(judged.grounding_ratio, 4),

@@ -73,6 +73,7 @@ class Evidence(BaseModel):
 
 class ClaimVerdict(BaseModel):
     cid: str
+    text: Optional[str] = None
     status: Status
     cluster_flag: bool
     grounding_ratio: float

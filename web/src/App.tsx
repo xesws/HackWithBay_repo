@@ -144,9 +144,10 @@ function EvidencePanel({ verdict, selected }: { verdict: Verdict; selected: any 
 function ClaimEvidence({ claim, compact }: { claim: any; compact?: boolean }) {
   const ev = claim.evidence ?? {};
   const statusClass = claim.status?.toLowerCase();
+  const claimText = claim.text || claim.cid || "claim";
   return (
     <div className={compact ? "claim compact" : "claim"}>
-      <div className="claim-text">“{claim.text}”</div>
+      <div className="claim-text">“{claimText}”</div>
       <div className="badges">
         <span className={`badge status-${statusClass}`}>{claim.status}</span>
         {claim.cluster_flag && <span className="badge cluster">fabricated cluster</span>}
