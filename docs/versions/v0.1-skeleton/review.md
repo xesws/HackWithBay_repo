@@ -25,7 +25,7 @@
    证据：`/verify/healthz → rocketride:false`；`PIPELINE_USE_ROCKETRIDE` 未设；代码 gate 默认 off。
    `.pipe` 已写、rocketride SDK 已装、`_run_via_rocketride` 已编码但**从未对活 runtime 验证过**。
    处置选项 → 人类定：(a) 打开并验证真 runtime 路径；(b) 诚实表述“已定义 RocketRide pipeline + 自托管 runtime 可用，直连执行为 active fallback”（decisions #0 已豁免 Cloud）。**建议 (b)**（低风险，不动活 demo）。
-2. **credit gate 仍 stub**：`/verify` 的 `consume_credit` 未接线（`credit_backend:stub`）——接线 + demo 号预充中（本轮进行）。
+2. ~~**credit gate 仍 stub**~~ **✅ 已接线（LIVE）**：`/verify` 走真 `consume_credit`（JWT 转发；fn 是 auth:required 拒 service key）；fail-open 保活 demo。demo 号已 e2e 验证：`demo-999`(999→998 扣费) / `demo-empty`(insufficient_credits 拦截)。**遗留决策**：新注册号默认 0 余额→会被拦；是否给新号发 N 张免费额度（需 signup hook）由你定。
 3. **decisions #0 的 Discord receipt** 仍为 `<粘贴原文>` 占位：sponsor-comms 属人类边界，须你粘贴 Krish Garg 11:42 / Joe Maionchi 11:47 原文。
 
 ## 契约变更记录（本版）
