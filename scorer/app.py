@@ -24,6 +24,7 @@ from fastapi import FastAPI
 from .models import ScoreRequest, ScoreResponse
 from .reference import InMemoryReference, ReferenceGraph
 from .scoring import score_job
+from .verify import router as verify_router  # Track B, Shape 2 /verify (territory exemption)
 
 _reference: ReferenceGraph | None = None
 
@@ -68,6 +69,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="GraphJudge Scorer", version="0.1", lifespan=lifespan)
+app.include_router(verify_router)  # Track B /verify (Shape 2, single public port)
 
 
 @app.get("/health")
