@@ -1,0 +1,64 @@
+doc,cid,subject,rel,object,label,mutation,original
+A,A001,Gemini Pro,developed_by,Google DeepMind,TRUE,truth,
+A,A002,GPT-4,evaluated_on,MMLU,TRUE,truth,
+A,A003,Claude Sonnet 4,developed_by,Anthropic,TRUE,truth,
+A,A004,Gemini 2.5 Flash,developed_by,Google DeepMind,TRUE,truth,
+A,A005,Aya 23 35B,evaluated_on,MMLU,TRUE,truth,
+A,A006,o1-preview,released_in,2024,TRUE,truth,
+A,A007,Llama 3 8B,released_in,2024,TRUE,truth,
+A,A008,Gemma 2 9B,evaluated_on,GSM8K,TRUE,truth,
+A,A009,o1-preview,developed_by,OpenAI,TRUE,truth,
+A,A010,DeepSeek-R1,developed_by,DeepSeek,TRUE,truth,
+B,BT001,Qwen1.5-7B,developed_by,Alibaba Cloud,TRUE,truth,
+B,BT002,Llama 3.1 405B,developed_by,Meta,TRUE,truth,
+B,BF001,Claude 3 Opus,developed_by,Google DeepMind,CONTRADICTED,tail_swap,Anthropic
+B,BT003,Claude 3 Opus,evaluated_on,HumanEval,TRUE,truth,
+B,BT004,Gemma 2B,developed_by,Google,TRUE,truth,
+B,BF002,GPT-4o,developed_by,Anthropic,CONTRADICTED,tail_swap,OpenAI
+B,BT005,o1,developed_by,OpenAI,TRUE,truth,
+B,BT006,Falcon 2 11B,released_in,2024,TRUE,truth,
+B,BF003,Gemini 1.5 Pro,developed_by,OpenAI,CONTRADICTED,tail_swap,Google DeepMind
+B,BT007,DeepSeek-Coder 33B,released_in,2023,TRUE,truth,
+B,BT008,Mixtral 8x7B,released_in,2023,TRUE,truth,
+B,BF004,Llama 3.1 405B,developed_by,Mistral AI,CONTRADICTED,tail_swap,Meta
+B,BT009,Gemini Ultra,evaluated_on,GSM8K,TRUE,truth,
+B,BT010,OLMo 7B,evaluated_on,HellaSwag,TRUE,truth,
+B,BF005,DeepSeek-R1,developed_by,Cohere,CONTRADICTED,tail_swap,DeepSeek
+B,BT011,Llama 2 70B,evaluated_on,HellaSwag,TRUE,truth,
+B,BT012,Claude 3.5 Sonnet,released_in,2024,TRUE,truth,
+B,BF006,GPT-4o,release_year,2026,CONTRADICTED,numeric,2024
+B,BT013,Claude Opus 4,released_in,2025,TRUE,truth,
+B,BT014,GPT-4,evaluated_on,GSM8K,TRUE,truth,
+B,BF007,Llama 3.1 405B,param_count_b,810,CONTRADICTED,numeric,405
+B,BT015,Llama 2 70B,evaluated_on,MMLU,TRUE,truth,
+B,BT016,Gemma 3 1B,released_in,2025,TRUE,truth,
+B,BF008,Claude 3.5 Sonnet,context_window_k,100,CONTRADICTED,numeric,200
+B,BT017,GPT-4o,developed_by,OpenAI,TRUE,truth,
+B,BT018,Claude 3.5 Sonnet,evaluated_on,MMMU,TRUE,truth,
+B,BT019,Code Llama 70B,released_in,2024,TRUE,truth,
+C,CT001,Yi-6B,developed_by,01.AI,TRUE,truth,
+C,CT002,Gemma 2 27B,evaluated_on,MMLU,TRUE,truth,
+C,CF001,AstraLM-9B,developed_by,Anthropic,FABRICATED_ENTITY,fabricated_entity,
+C,CT003,o3-mini,developed_by,OpenAI,TRUE,truth,
+C,CT004,Jamba 1.5 Large,developed_by,AI21 Labs,TRUE,truth,
+C,CF002,GPT-4o,developed_by,Vesper Labs,FABRICATED_ENTITY,fabricated_entity,
+C,CT005,Llama 2 Open Foundation and Fine-Tuned Chat Models,authored_by,Kevin Stone,TRUE,truth,
+C,CT006,GPT-4o,released_in,2024,TRUE,truth,
+C,CF003,Claude 3 Opus,evaluated_on,Northstar Eval,FABRICATED_ENTITY,fabricated_entity,
+C,CT007,Llama 3.2 90B,developed_by,Meta,TRUE,truth,
+D,D001,NebulaForge 42B,developed_by,Argent Loop Labs,FABRICATED_CLUSTER,fabricated_cluster,
+D,D002,NebulaForge 42B,released_in,Cycle Year 2044,FABRICATED_CLUSTER,fabricated_cluster,
+D,D003,NebulaForge 42B,evaluated_on,OrbitalBench,FABRICATED_CLUSTER,fabricated_cluster,
+D,D004,NebulaForge 42B,based_on,The NebulaForge Report,FABRICATED_CLUSTER,fabricated_cluster,
+D,D005,The NebulaForge Report,authored_by,Mira Solven,FABRICATED_CLUSTER,fabricated_cluster,
+D,D006,OrbitalBench,cited_by,The NebulaForge Report,FABRICATED_CLUSTER,fabricated_cluster,
+E,E001,Omni,developed_by,OpenAI,TRUE,alias_rewrite,GPT-4o developed_by OpenAI
+E,E002,4o mini,released_in,2024,TRUE,alias_rewrite,GPT-4o mini released_in 2024
+E,E003,Opus,developed_by,Anthropic,TRUE,alias_rewrite,Claude 3 Opus developed_by Anthropic
+E,E004,Sonnet 4,released_in,2025,TRUE,alias_rewrite,Claude Sonnet 4 released_in 2025
+E,E005,Gemini Pro 2.5,developed_by,Google DeepMind,TRUE,alias_rewrite,Gemini 2.5 Pro developed_by Google DeepMind
+E,E006,Llama-3.1-405B,developed_by,Meta AI,TRUE,alias_rewrite,Llama 3.1 405B developed_by Meta
+E,E007,Mixtral-8x7B,developed_by,Mistral,TRUE,alias_rewrite,Mixtral 8x7B developed_by Mistral AI
+E,E008,Qwen 2.5 72B,developed_by,Tongyi Qianwen,TRUE,alias_rewrite,Qwen2.5-72B developed_by Alibaba Cloud
+E,E009,DeepSeek R1,released_in,2025,TRUE,alias_rewrite,DeepSeek-R1 released_in 2025
+E,E010,DBRX,developed_by,Databricks Mosaic Research,TRUE,alias_rewrite,DBRX developed_by Databricks

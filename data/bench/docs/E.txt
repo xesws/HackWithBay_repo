@@ -1,0 +1,1 @@
+Omni was developed by OpenAI. 4o mini was released in 2024. Opus was developed by Anthropic. Sonnet 4 was released in 2025. Gemini Pro 2.5 was developed by Google DeepMind. Llama-3.1-405B was developed by Meta AI. Mixtral-8x7B was developed by Mistral. Qwen 2.5 72B was developed by Tongyi Qianwen. DeepSeek R1 was released in 2025. DBRX was developed by Databricks Mosaic Research.

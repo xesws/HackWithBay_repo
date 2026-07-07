@@ -1,0 +1,333 @@
+src,src_name,src_type,rel,dst,dst_name,dst_type,functional
+gpt_4,GPT-4,Model,developed_by,openai,OpenAI,Org,true
+gpt_4,GPT-4,Model,released_in,year_2023,2023,Year,true
+gpt_4_turbo,GPT-4 Turbo,Model,developed_by,openai,OpenAI,Org,true
+gpt_4_turbo,GPT-4 Turbo,Model,released_in,year_2023,2023,Year,true
+gpt_4o,GPT-4o,Model,developed_by,openai,OpenAI,Org,true
+gpt_4o,GPT-4o,Model,released_in,year_2024,2024,Year,true
+gpt_4o_mini,GPT-4o mini,Model,developed_by,openai,OpenAI,Org,true
+gpt_4o_mini,GPT-4o mini,Model,released_in,year_2024,2024,Year,true
+o1_preview,o1-preview,Model,developed_by,openai,OpenAI,Org,true
+o1_preview,o1-preview,Model,released_in,year_2024,2024,Year,true
+o1,o1,Model,developed_by,openai,OpenAI,Org,true
+o1,o1,Model,released_in,year_2024,2024,Year,true
+o3_mini,o3-mini,Model,developed_by,openai,OpenAI,Org,true
+o3_mini,o3-mini,Model,released_in,year_2025,2025,Year,true
+gpt_4_1,GPT-4.1,Model,developed_by,openai,OpenAI,Org,true
+gpt_4_1,GPT-4.1,Model,released_in,year_2025,2025,Year,true
+gpt_4_1_mini,GPT-4.1 mini,Model,developed_by,openai,OpenAI,Org,true
+gpt_4_1_mini,GPT-4.1 mini,Model,released_in,year_2025,2025,Year,true
+claude_2,Claude 2,Model,developed_by,anthropic,Anthropic,Org,true
+claude_2,Claude 2,Model,released_in,year_2023,2023,Year,true
+claude_2_1,Claude 2.1,Model,developed_by,anthropic,Anthropic,Org,true
+claude_2_1,Claude 2.1,Model,released_in,year_2023,2023,Year,true
+claude_3_opus,Claude 3 Opus,Model,developed_by,anthropic,Anthropic,Org,true
+claude_3_opus,Claude 3 Opus,Model,released_in,year_2024,2024,Year,true
+claude_3_sonnet,Claude 3 Sonnet,Model,developed_by,anthropic,Anthropic,Org,true
+claude_3_sonnet,Claude 3 Sonnet,Model,released_in,year_2024,2024,Year,true
+claude_3_haiku,Claude 3 Haiku,Model,developed_by,anthropic,Anthropic,Org,true
+claude_3_haiku,Claude 3 Haiku,Model,released_in,year_2024,2024,Year,true
+claude_3_5_sonnet,Claude 3.5 Sonnet,Model,developed_by,anthropic,Anthropic,Org,true
+claude_3_5_sonnet,Claude 3.5 Sonnet,Model,released_in,year_2024,2024,Year,true
+claude_3_5_haiku,Claude 3.5 Haiku,Model,developed_by,anthropic,Anthropic,Org,true
+claude_3_5_haiku,Claude 3.5 Haiku,Model,released_in,year_2024,2024,Year,true
+claude_3_7_sonnet,Claude 3.7 Sonnet,Model,developed_by,anthropic,Anthropic,Org,true
+claude_3_7_sonnet,Claude 3.7 Sonnet,Model,released_in,year_2025,2025,Year,true
+claude_sonnet_4,Claude Sonnet 4,Model,developed_by,anthropic,Anthropic,Org,true
+claude_sonnet_4,Claude Sonnet 4,Model,released_in,year_2025,2025,Year,true
+claude_opus_4,Claude Opus 4,Model,developed_by,anthropic,Anthropic,Org,true
+claude_opus_4,Claude Opus 4,Model,released_in,year_2025,2025,Year,true
+gemini_ultra,Gemini Ultra,Model,developed_by,google_deepmind,Google DeepMind,Org,true
+gemini_ultra,Gemini Ultra,Model,released_in,year_2023,2023,Year,true
+gemini_pro,Gemini Pro,Model,developed_by,google_deepmind,Google DeepMind,Org,true
+gemini_pro,Gemini Pro,Model,released_in,year_2023,2023,Year,true
+gemini_1_5_pro,Gemini 1.5 Pro,Model,developed_by,google_deepmind,Google DeepMind,Org,true
+gemini_1_5_pro,Gemini 1.5 Pro,Model,released_in,year_2024,2024,Year,true
+gemini_1_5_flash,Gemini 1.5 Flash,Model,developed_by,google_deepmind,Google DeepMind,Org,true
+gemini_1_5_flash,Gemini 1.5 Flash,Model,released_in,year_2024,2024,Year,true
+gemini_2_0_flash,Gemini 2.0 Flash,Model,developed_by,google_deepmind,Google DeepMind,Org,true
+gemini_2_0_flash,Gemini 2.0 Flash,Model,released_in,year_2024,2024,Year,true
+gemini_2_5_pro,Gemini 2.5 Pro,Model,developed_by,google_deepmind,Google DeepMind,Org,true
+gemini_2_5_pro,Gemini 2.5 Pro,Model,released_in,year_2025,2025,Year,true
+gemini_2_5_flash,Gemini 2.5 Flash,Model,developed_by,google_deepmind,Google DeepMind,Org,true
+gemini_2_5_flash,Gemini 2.5 Flash,Model,released_in,year_2025,2025,Year,true
+gemma_2b,Gemma 2B,Model,developed_by,google,Google,Org,true
+gemma_2b,Gemma 2B,Model,released_in,year_2024,2024,Year,true
+gemma_7b,Gemma 7B,Model,developed_by,google,Google,Org,true
+gemma_7b,Gemma 7B,Model,released_in,year_2024,2024,Year,true
+gemma_2_9b,Gemma 2 9B,Model,developed_by,google,Google,Org,true
+gemma_2_9b,Gemma 2 9B,Model,released_in,year_2024,2024,Year,true
+gemma_2_27b,Gemma 2 27B,Model,developed_by,google,Google,Org,true
+gemma_2_27b,Gemma 2 27B,Model,released_in,year_2024,2024,Year,true
+gemma_3_1b,Gemma 3 1B,Model,developed_by,google,Google,Org,true
+gemma_3_1b,Gemma 3 1B,Model,released_in,year_2025,2025,Year,true
+gemma_3_4b,Gemma 3 4B,Model,developed_by,google,Google,Org,true
+gemma_3_4b,Gemma 3 4B,Model,released_in,year_2025,2025,Year,true
+gemma_3_12b,Gemma 3 12B,Model,developed_by,google,Google,Org,true
+gemma_3_12b,Gemma 3 12B,Model,released_in,year_2025,2025,Year,true
+gemma_3_27b,Gemma 3 27B,Model,developed_by,google,Google,Org,true
+gemma_3_27b,Gemma 3 27B,Model,released_in,year_2025,2025,Year,true
+llama_2_7b,Llama 2 7B,Model,developed_by,meta,Meta,Org,true
+llama_2_7b,Llama 2 7B,Model,released_in,year_2023,2023,Year,true
+llama_2_13b,Llama 2 13B,Model,developed_by,meta,Meta,Org,true
+llama_2_13b,Llama 2 13B,Model,released_in,year_2023,2023,Year,true
+llama_2_70b,Llama 2 70B,Model,developed_by,meta,Meta,Org,true
+llama_2_70b,Llama 2 70B,Model,released_in,year_2023,2023,Year,true
+code_llama_7b,Code Llama 7B,Model,developed_by,meta,Meta,Org,true
+code_llama_7b,Code Llama 7B,Model,released_in,year_2023,2023,Year,true
+code_llama_13b,Code Llama 13B,Model,developed_by,meta,Meta,Org,true
+code_llama_13b,Code Llama 13B,Model,released_in,year_2023,2023,Year,true
+code_llama_34b,Code Llama 34B,Model,developed_by,meta,Meta,Org,true
+code_llama_34b,Code Llama 34B,Model,released_in,year_2023,2023,Year,true
+code_llama_70b,Code Llama 70B,Model,developed_by,meta,Meta,Org,true
+code_llama_70b,Code Llama 70B,Model,released_in,year_2024,2024,Year,true
+llama_3_8b,Llama 3 8B,Model,developed_by,meta,Meta,Org,true
+llama_3_8b,Llama 3 8B,Model,released_in,year_2024,2024,Year,true
+llama_3_70b,Llama 3 70B,Model,developed_by,meta,Meta,Org,true
+llama_3_70b,Llama 3 70B,Model,released_in,year_2024,2024,Year,true
+llama_3_1_8b,Llama 3.1 8B,Model,developed_by,meta,Meta,Org,true
+llama_3_1_8b,Llama 3.1 8B,Model,released_in,year_2024,2024,Year,true
+llama_3_1_70b,Llama 3.1 70B,Model,developed_by,meta,Meta,Org,true
+llama_3_1_70b,Llama 3.1 70B,Model,released_in,year_2024,2024,Year,true
+llama_3_1_405b,Llama 3.1 405B,Model,developed_by,meta,Meta,Org,true
+llama_3_1_405b,Llama 3.1 405B,Model,released_in,year_2024,2024,Year,true
+llama_3_2_1b,Llama 3.2 1B,Model,developed_by,meta,Meta,Org,true
+llama_3_2_1b,Llama 3.2 1B,Model,released_in,year_2024,2024,Year,true
+llama_3_2_3b,Llama 3.2 3B,Model,developed_by,meta,Meta,Org,true
+llama_3_2_3b,Llama 3.2 3B,Model,released_in,year_2024,2024,Year,true
+llama_3_2_11b,Llama 3.2 11B,Model,developed_by,meta,Meta,Org,true
+llama_3_2_11b,Llama 3.2 11B,Model,released_in,year_2024,2024,Year,true
+llama_3_2_90b,Llama 3.2 90B,Model,developed_by,meta,Meta,Org,true
+llama_3_2_90b,Llama 3.2 90B,Model,released_in,year_2024,2024,Year,true
+llama_3_3_70b,Llama 3.3 70B,Model,developed_by,meta,Meta,Org,true
+llama_3_3_70b,Llama 3.3 70B,Model,released_in,year_2024,2024,Year,true
+mistral_7b,Mistral 7B,Model,developed_by,mistral_ai,Mistral AI,Org,true
+mistral_7b,Mistral 7B,Model,released_in,year_2023,2023,Year,true
+mixtral_8x7b,Mixtral 8x7B,Model,developed_by,mistral_ai,Mistral AI,Org,true
+mixtral_8x7b,Mixtral 8x7B,Model,released_in,year_2023,2023,Year,true
+mixtral_8x22b,Mixtral 8x22B,Model,developed_by,mistral_ai,Mistral AI,Org,true
+mixtral_8x22b,Mixtral 8x22B,Model,released_in,year_2024,2024,Year,true
+mistral_large,Mistral Large,Model,developed_by,mistral_ai,Mistral AI,Org,true
+mistral_large,Mistral Large,Model,released_in,year_2024,2024,Year,true
+mistral_nemo,Mistral NeMo,Model,developed_by,mistral_ai,Mistral AI,Org,true
+mistral_nemo,Mistral NeMo,Model,released_in,year_2024,2024,Year,true
+codestral_22b,Codestral 22B,Model,developed_by,mistral_ai,Mistral AI,Org,true
+codestral_22b,Codestral 22B,Model,released_in,year_2024,2024,Year,true
+ministral_3b,Ministral 3B,Model,developed_by,mistral_ai,Mistral AI,Org,true
+ministral_3b,Ministral 3B,Model,released_in,year_2024,2024,Year,true
+ministral_8b,Ministral 8B,Model,developed_by,mistral_ai,Mistral AI,Org,true
+ministral_8b,Ministral 8B,Model,released_in,year_2024,2024,Year,true
+mistral_small_3_1,Mistral Small 3.1,Model,developed_by,mistral_ai,Mistral AI,Org,true
+mistral_small_3_1,Mistral Small 3.1,Model,released_in,year_2025,2025,Year,true
+command_r,Command R,Model,developed_by,cohere,Cohere,Org,true
+command_r,Command R,Model,released_in,year_2024,2024,Year,true
+command_r_plus,Command R+,Model,developed_by,cohere,Cohere,Org,true
+command_r_plus,Command R+,Model,released_in,year_2024,2024,Year,true
+aya_23_8b,Aya 23 8B,Model,developed_by,cohere,Cohere,Org,true
+aya_23_8b,Aya 23 8B,Model,released_in,year_2024,2024,Year,true
+aya_23_35b,Aya 23 35B,Model,developed_by,cohere,Cohere,Org,true
+aya_23_35b,Aya 23 35B,Model,released_in,year_2024,2024,Year,true
+aya_expanse_8b,Aya Expanse 8B,Model,developed_by,cohere,Cohere,Org,true
+aya_expanse_8b,Aya Expanse 8B,Model,released_in,year_2024,2024,Year,true
+aya_expanse_32b,Aya Expanse 32B,Model,developed_by,cohere,Cohere,Org,true
+aya_expanse_32b,Aya Expanse 32B,Model,released_in,year_2024,2024,Year,true
+command_a,Command A,Model,developed_by,cohere,Cohere,Org,true
+command_a,Command A,Model,released_in,year_2025,2025,Year,true
+qwen_7b,Qwen-7B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen_7b,Qwen-7B,Model,released_in,year_2023,2023,Year,true
+qwen_14b,Qwen-14B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen_14b,Qwen-14B,Model,released_in,year_2023,2023,Year,true
+qwen_72b,Qwen-72B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen_72b,Qwen-72B,Model,released_in,year_2023,2023,Year,true
+qwen1_5_7b,Qwen1.5-7B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen1_5_7b,Qwen1.5-7B,Model,released_in,year_2024,2024,Year,true
+qwen1_5_32b,Qwen1.5-32B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen1_5_32b,Qwen1.5-32B,Model,released_in,year_2024,2024,Year,true
+qwen1_5_72b,Qwen1.5-72B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen1_5_72b,Qwen1.5-72B,Model,released_in,year_2024,2024,Year,true
+qwen1_5_110b,Qwen1.5-110B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen1_5_110b,Qwen1.5-110B,Model,released_in,year_2024,2024,Year,true
+qwen2_7b,Qwen2-7B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen2_7b,Qwen2-7B,Model,released_in,year_2024,2024,Year,true
+qwen2_72b,Qwen2-72B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen2_72b,Qwen2-72B,Model,released_in,year_2024,2024,Year,true
+qwen2_5_7b,Qwen2.5-7B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen2_5_7b,Qwen2.5-7B,Model,released_in,year_2024,2024,Year,true
+qwen2_5_14b,Qwen2.5-14B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen2_5_14b,Qwen2.5-14B,Model,released_in,year_2024,2024,Year,true
+qwen2_5_32b,Qwen2.5-32B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen2_5_32b,Qwen2.5-32B,Model,released_in,year_2024,2024,Year,true
+qwen2_5_72b,Qwen2.5-72B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen2_5_72b,Qwen2.5-72B,Model,released_in,year_2024,2024,Year,true
+qwq_32b_preview,QwQ-32B-Preview,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwq_32b_preview,QwQ-32B-Preview,Model,released_in,year_2024,2024,Year,true
+qwen3_32b,Qwen3-32B,Model,developed_by,alibaba_cloud,Alibaba Cloud,Org,true
+qwen3_32b,Qwen3-32B,Model,released_in,year_2025,2025,Year,true
+deepseek_coder_6_7b,DeepSeek-Coder 6.7B,Model,developed_by,deepseek,DeepSeek,Org,true
+deepseek_coder_6_7b,DeepSeek-Coder 6.7B,Model,released_in,year_2023,2023,Year,true
+deepseek_coder_33b,DeepSeek-Coder 33B,Model,developed_by,deepseek,DeepSeek,Org,true
+deepseek_coder_33b,DeepSeek-Coder 33B,Model,released_in,year_2023,2023,Year,true
+deepseek_llm_7b,DeepSeek LLM 7B,Model,developed_by,deepseek,DeepSeek,Org,true
+deepseek_llm_7b,DeepSeek LLM 7B,Model,released_in,year_2023,2023,Year,true
+deepseek_llm_67b,DeepSeek LLM 67B,Model,developed_by,deepseek,DeepSeek,Org,true
+deepseek_llm_67b,DeepSeek LLM 67B,Model,released_in,year_2023,2023,Year,true
+deepseek_v2,DeepSeek-V2,Model,developed_by,deepseek,DeepSeek,Org,true
+deepseek_v2,DeepSeek-V2,Model,released_in,year_2024,2024,Year,true
+deepseek_v3,DeepSeek-V3,Model,developed_by,deepseek,DeepSeek,Org,true
+deepseek_v3,DeepSeek-V3,Model,released_in,year_2024,2024,Year,true
+deepseek_r1,DeepSeek-R1,Model,developed_by,deepseek,DeepSeek,Org,true
+deepseek_r1,DeepSeek-R1,Model,released_in,year_2025,2025,Year,true
+jamba,Jamba,Model,developed_by,ai21_labs,AI21 Labs,Org,true
+jamba,Jamba,Model,released_in,year_2024,2024,Year,true
+jamba_1_5_mini,Jamba 1.5 Mini,Model,developed_by,ai21_labs,AI21 Labs,Org,true
+jamba_1_5_mini,Jamba 1.5 Mini,Model,released_in,year_2024,2024,Year,true
+jamba_1_5_large,Jamba 1.5 Large,Model,developed_by,ai21_labs,AI21 Labs,Org,true
+jamba_1_5_large,Jamba 1.5 Large,Model,released_in,year_2024,2024,Year,true
+falcon_40b,Falcon 40B,Model,developed_by,tii,Technology Innovation Institute,Org,true
+falcon_40b,Falcon 40B,Model,released_in,year_2023,2023,Year,true
+falcon_180b,Falcon 180B,Model,developed_by,tii,Technology Innovation Institute,Org,true
+falcon_180b,Falcon 180B,Model,released_in,year_2023,2023,Year,true
+falcon_2_11b,Falcon 2 11B,Model,developed_by,tii,Technology Innovation Institute,Org,true
+falcon_2_11b,Falcon 2 11B,Model,released_in,year_2024,2024,Year,true
+falcon_2_11b_vlm,Falcon 2 11B VLM,Model,developed_by,tii,Technology Innovation Institute,Org,true
+falcon_2_11b_vlm,Falcon 2 11B VLM,Model,released_in,year_2024,2024,Year,true
+olmo_7b,OLMo 7B,Model,developed_by,allen_ai,Allen Institute for AI,Org,true
+olmo_7b,OLMo 7B,Model,released_in,year_2024,2024,Year,true
+olmo_2_7b,OLMo 2 7B,Model,developed_by,allen_ai,Allen Institute for AI,Org,true
+olmo_2_7b,OLMo 2 7B,Model,released_in,year_2024,2024,Year,true
+olmo_2_13b,OLMo 2 13B,Model,developed_by,allen_ai,Allen Institute for AI,Org,true
+olmo_2_13b,OLMo 2 13B,Model,released_in,year_2024,2024,Year,true
+dbrx,DBRX,Model,developed_by,databricks,Databricks,Org,true
+dbrx,DBRX,Model,released_in,year_2024,2024,Year,true
+yi_6b,Yi-6B,Model,developed_by,zero_one_ai,01.AI,Org,true
+yi_6b,Yi-6B,Model,released_in,year_2023,2023,Year,true
+yi_34b,Yi-34B,Model,developed_by,zero_one_ai,01.AI,Org,true
+yi_34b,Yi-34B,Model,released_in,year_2023,2023,Year,true
+yi_1_5_34b,Yi-1.5-34B,Model,developed_by,zero_one_ai,01.AI,Org,true
+yi_1_5_34b,Yi-1.5-34B,Model,released_in,year_2024,2024,Year,true
+gpt_4,GPT-4,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+gpt_4,GPT-4,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+gpt_4,GPT-4,Model,evaluated_on,gsm8k,GSM8K,Benchmark,false
+gpt_4,GPT-4,Model,evaluated_on,math,MATH,Benchmark,false
+gpt_4,GPT-4,Model,evaluated_on,hellaswag,HellaSwag,Benchmark,false
+gpt_4o,GPT-4o,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+gpt_4o,GPT-4o,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+gpt_4o,GPT-4o,Model,evaluated_on,math,MATH,Benchmark,false
+gpt_4o,GPT-4o,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+gpt_4o,GPT-4o,Model,evaluated_on,mmmu,MMMU,Benchmark,false
+gpt_4o_mini,GPT-4o mini,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+gpt_4o_mini,GPT-4o mini,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+gpt_4o_mini,GPT-4o mini,Model,evaluated_on,mmmu,MMMU,Benchmark,false
+o1,o1,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+o1,o1,Model,evaluated_on,math,MATH,Benchmark,false
+o3_mini,o3-mini,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+o3_mini,o3-mini,Model,evaluated_on,math,MATH,Benchmark,false
+claude_3_opus,Claude 3 Opus,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+claude_3_opus,Claude 3 Opus,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+claude_3_opus,Claude 3 Opus,Model,evaluated_on,gsm8k,GSM8K,Benchmark,false
+claude_3_opus,Claude 3 Opus,Model,evaluated_on,math,MATH,Benchmark,false
+claude_3_opus,Claude 3 Opus,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+claude_3_5_sonnet,Claude 3.5 Sonnet,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+claude_3_5_sonnet,Claude 3.5 Sonnet,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+claude_3_5_sonnet,Claude 3.5 Sonnet,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+claude_3_5_sonnet,Claude 3.5 Sonnet,Model,evaluated_on,mmmu,MMMU,Benchmark,false
+claude_3_7_sonnet,Claude 3.7 Sonnet,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+claude_3_7_sonnet,Claude 3.7 Sonnet,Model,evaluated_on,math,MATH,Benchmark,false
+gemini_ultra,Gemini Ultra,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+gemini_ultra,Gemini Ultra,Model,evaluated_on,gsm8k,GSM8K,Benchmark,false
+gemini_ultra,Gemini Ultra,Model,evaluated_on,math,MATH,Benchmark,false
+gemini_ultra,Gemini Ultra,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+gemini_1_5_pro,Gemini 1.5 Pro,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+gemini_1_5_pro,Gemini 1.5 Pro,Model,evaluated_on,mmmu,MMMU,Benchmark,false
+gemini_1_5_pro,Gemini 1.5 Pro,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+gemini_2_5_pro,Gemini 2.5 Pro,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+gemini_2_5_pro,Gemini 2.5 Pro,Model,evaluated_on,math,MATH,Benchmark,false
+gemma_2_9b,Gemma 2 9B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+gemma_2_9b,Gemma 2 9B,Model,evaluated_on,hellaswag,HellaSwag,Benchmark,false
+gemma_2_9b,Gemma 2 9B,Model,evaluated_on,gsm8k,GSM8K,Benchmark,false
+gemma_2_27b,Gemma 2 27B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+gemma_2_27b,Gemma 2 27B,Model,evaluated_on,hellaswag,HellaSwag,Benchmark,false
+llama_2_70b,Llama 2 70B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+llama_2_70b,Llama 2 70B,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+llama_2_70b,Llama 2 70B,Model,evaluated_on,gsm8k,GSM8K,Benchmark,false
+llama_2_70b,Llama 2 70B,Model,evaluated_on,hellaswag,HellaSwag,Benchmark,false
+llama_2_70b,Llama 2 70B,Model,evaluated_on,truthfulqa,TruthfulQA,Benchmark,false
+llama_3_70b,Llama 3 70B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+llama_3_70b,Llama 3 70B,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+llama_3_70b,Llama 3 70B,Model,evaluated_on,gsm8k,GSM8K,Benchmark,false
+llama_3_70b,Llama 3 70B,Model,evaluated_on,hellaswag,HellaSwag,Benchmark,false
+llama_3_1_405b,Llama 3.1 405B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+llama_3_1_405b,Llama 3.1 405B,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+llama_3_1_405b,Llama 3.1 405B,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+llama_3_1_405b,Llama 3.1 405B,Model,evaluated_on,math,MATH,Benchmark,false
+llama_3_3_70b,Llama 3.3 70B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+llama_3_3_70b,Llama 3.3 70B,Model,evaluated_on,ifeval,IFEval,Benchmark,false
+mistral_7b,Mistral 7B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+mistral_7b,Mistral 7B,Model,evaluated_on,hellaswag,HellaSwag,Benchmark,false
+mistral_7b,Mistral 7B,Model,evaluated_on,arc_challenge,ARC-Challenge,Benchmark,false
+mixtral_8x7b,Mixtral 8x7B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+mixtral_8x7b,Mixtral 8x7B,Model,evaluated_on,gsm8k,GSM8K,Benchmark,false
+mixtral_8x7b,Mixtral 8x7B,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+mixtral_8x22b,Mixtral 8x22B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+mixtral_8x22b,Mixtral 8x22B,Model,evaluated_on,gsm8k,GSM8K,Benchmark,false
+codestral_22b,Codestral 22B,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+codestral_22b,Codestral 22B,Model,evaluated_on,mbpp,MBPP,Benchmark,false
+command_r,Command R,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+command_r,Command R,Model,evaluated_on,mt_bench,MT-Bench,Benchmark,false
+command_r_plus,Command R+,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+command_r_plus,Command R+,Model,evaluated_on,mt_bench,MT-Bench,Benchmark,false
+aya_23_35b,Aya 23 35B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+qwen_72b,Qwen-72B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+qwen_72b,Qwen-72B,Model,evaluated_on,gsm8k,GSM8K,Benchmark,false
+qwen_72b,Qwen-72B,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+qwen1_5_72b,Qwen1.5-72B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+qwen1_5_72b,Qwen1.5-72B,Model,evaluated_on,math,MATH,Benchmark,false
+qwen2_72b,Qwen2-72B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+qwen2_72b,Qwen2-72B,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+qwen2_5_72b,Qwen2.5-72B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+qwen2_5_72b,Qwen2.5-72B,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+qwen2_5_72b,Qwen2.5-72B,Model,evaluated_on,math,MATH,Benchmark,false
+qwen2_5_32b,Qwen2.5-32B,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+qwen2_5_32b,Qwen2.5-32B,Model,evaluated_on,mbpp,MBPP,Benchmark,false
+qwq_32b_preview,QwQ-32B-Preview,Model,evaluated_on,math,MATH,Benchmark,false
+deepseek_coder_33b,DeepSeek-Coder 33B,Model,evaluated_on,human_eval,HumanEval,Benchmark,false
+deepseek_coder_33b,DeepSeek-Coder 33B,Model,evaluated_on,mbpp,MBPP,Benchmark,false
+deepseek_v2,DeepSeek-V2,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+deepseek_v2,DeepSeek-V2,Model,evaluated_on,gsm8k,GSM8K,Benchmark,false
+deepseek_v3,DeepSeek-V3,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+deepseek_v3,DeepSeek-V3,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+deepseek_v3,DeepSeek-V3,Model,evaluated_on,livecodebench,LiveCodeBench,Benchmark,false
+deepseek_r1,DeepSeek-R1,Model,evaluated_on,gpqa,GPQA,Benchmark,false
+deepseek_r1,DeepSeek-R1,Model,evaluated_on,math,MATH,Benchmark,false
+deepseek_r1,DeepSeek-R1,Model,evaluated_on,livecodebench,LiveCodeBench,Benchmark,false
+jamba,Jamba,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+jamba_1_5_large,Jamba 1.5 Large,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+falcon_180b,Falcon 180B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+falcon_180b,Falcon 180B,Model,evaluated_on,hellaswag,HellaSwag,Benchmark,false
+olmo_7b,OLMo 7B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+olmo_7b,OLMo 7B,Model,evaluated_on,hellaswag,HellaSwag,Benchmark,false
+dbrx,DBRX,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+dbrx,DBRX,Model,evaluated_on,gsm8k,GSM8K,Benchmark,false
+yi_34b,Yi-34B,Model,evaluated_on,mmlu,MMLU,Benchmark,false
+yi_34b,Yi-34B,Model,evaluated_on,gsm8k,GSM8K,Benchmark,false
+gpt4_technical_report,GPT-4 Technical Report,Paper,released_in,year_2023,2023,Year,true
+gpt4_technical_report,GPT-4 Technical Report,Paper,authored_by,openai,OpenAI,Org,false
+llama_paper,LLaMA Open and Efficient Foundation Language Models,Paper,released_in,year_2023,2023,Year,true
+llama_paper,LLaMA Open and Efficient Foundation Language Models,Paper,authored_by,hugo_touvron,Hugo Touvron,Person,false
+llama_paper,LLaMA Open and Efficient Foundation Language Models,Paper,authored_by,thibaut_lavril,Thibaut Lavril,Person,false
+llama_paper,LLaMA Open and Efficient Foundation Language Models,Paper,authored_by,timothee_lacroix,Timothee Lacroix,Person,false
+llama_paper,LLaMA Open and Efficient Foundation Language Models,Paper,authored_by,guillaume_lample,Guillaume Lample,Person,false
+llama2_paper,Llama 2 Open Foundation and Fine-Tuned Chat Models,Paper,released_in,year_2023,2023,Year,true
+llama2_paper,Llama 2 Open Foundation and Fine-Tuned Chat Models,Paper,authored_by,hugo_touvron,Hugo Touvron,Person,false
+llama2_paper,Llama 2 Open Foundation and Fine-Tuned Chat Models,Paper,authored_by,louis_martin,Louis Martin,Person,false
+llama2_paper,Llama 2 Open Foundation and Fine-Tuned Chat Models,Paper,authored_by,kevin_stone,Kevin Stone,Person,false
+llama2_paper,Llama 2 Open Foundation and Fine-Tuned Chat Models,Paper,authored_by,peter_albert,Peter Albert,Person,false
+mistral_7b_paper,Mistral 7B Paper,Paper,released_in,year_2023,2023,Year,true
+mistral_7b_paper,Mistral 7B Paper,Paper,authored_by,albert_q_jiang,Albert Q. Jiang,Person,false
+mistral_7b_paper,Mistral 7B Paper,Paper,authored_by,alexandre_sablayrolles,Alexandre Sablayrolles,Person,false
+mistral_7b_paper,Mistral 7B Paper,Paper,authored_by,arthur_mensch,Arthur Mensch,Person,false
+mistral_7b_paper,Mistral 7B Paper,Paper,authored_by,guillaume_lample,Guillaume Lample,Person,false
+mixtral_paper,Mixtral of Experts,Paper,released_in,year_2024,2024,Year,true
+mixtral_paper,Mixtral of Experts,Paper,authored_by,albert_q_jiang,Albert Q. Jiang,Person,false
+mixtral_paper,Mixtral of Experts,Paper,authored_by,alexandre_sablayrolles,Alexandre Sablayrolles,Person,false
+mixtral_paper,Mixtral of Experts,Paper,authored_by,arthur_mensch,Arthur Mensch,Person,false

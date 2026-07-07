@@ -1,0 +1,1 @@
+Gemini Pro was developed by Google DeepMind. GPT-4 was evaluated on MMLU. Claude Sonnet 4 was developed by Anthropic. Gemini 2.5 Flash was developed by Google DeepMind. Aya 23 35B was evaluated on MMLU. o1-preview was released in 2024. Llama 3 8B was released in 2024. Gemma 2 9B was evaluated on GSM8K. o1-preview was developed by OpenAI. DeepSeek-R1 was developed by DeepSeek.
