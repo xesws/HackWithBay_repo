@@ -1,0 +1,29 @@
+{
+  "_comment": "GraphJudge Track C — Butterbase schema source of truth (contracts.md §4.5). Column names/types here match the FROZEN contract: credits_ledger(id,user_id,delta,reason,created_at); jobs(job_id pk,user_id,status,created_at); results(job_id pk,verdict jsonb,created_at). user_id/job_id are TEXT so contract ids like job_id='j_001' (§4.1) and arbitrary webhook user_id (§4.4) are accepted. NOTE: the live app app_r1568bo1iteg was pre-provisioned with a DEVIATING schema (user_id/job_id=uuid, credits_ledger.ts instead of created_at, results.verdict_json instead of verdict, extra results.user_id). Reconciling to this file requires DROPping the (empty) shared tables, which needs explicit human authorization — see dev-C.md NEEDS-HUMAN. Feed the `tables`/`_drop` object below to manage_schema apply once authorized.",
+  "tables": {
+    "credits_ledger": {
+      "columns": {
+        "id": { "type": "uuid", "primaryKey": true, "default": "gen_random_uuid()" },
+        "user_id": { "type": "text", "nullable": false },
+        "delta": { "type": "integer", "nullable": false },
+        "reason": { "type": "text" },
+        "created_at": { "type": "timestamptz", "default": "now()" }
+      }
+    },
+    "jobs": {
+      "columns": {
+        "job_id": { "type": "text", "primaryKey": true },
+        "user_id": { "type": "text", "nullable": false },
+        "status": { "type": "text" },
+        "created_at": { "type": "timestamptz", "default": "now()" }
+      }
+    },
+    "results": {
+      "columns": {
+        "job_id": { "type": "text", "primaryKey": true },
+        "verdict": { "type": "jsonb" },
+        "created_at": { "type": "timestamptz", "default": "now()" }
+      }
+    }
+  }
+}

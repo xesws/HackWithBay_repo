@@ -1,0 +1,127 @@
+{
+  "job_id": "j_sample_001",
+  "doc_score": 0.28,
+  "claims": [
+    {
+      "cid": "c1",
+      "kind": "relational",
+      "text": "Claude was developed by Anthropic.",
+      "status": "SUPPORTED",
+      "cluster_flag": false,
+      "grounding_ratio": 1.0,
+      "dist_to_core": 0,
+      "evidence": {
+        "type": "support",
+        "truth": "Anthropic",
+        "path": ["Claude", "developed_by", "Anthropic"]
+      }
+    },
+    {
+      "cid": "c2",
+      "kind": "relational",
+      "text": "GPT-4 was developed by Google.",
+      "status": "CONTRADICTED",
+      "cluster_flag": false,
+      "grounding_ratio": 1.0,
+      "dist_to_core": 0,
+      "evidence": {
+        "type": "conflict",
+        "truth": "OpenAI",
+        "path": ["GPT-4", "developed_by", "OpenAI"]
+      }
+    },
+    {
+      "cid": "c3",
+      "kind": "relational",
+      "text": "Zephyr-9000 is a large language model.",
+      "status": "UNGROUNDED",
+      "cluster_flag": false,
+      "grounding_ratio": 0.0,
+      "dist_to_core": null,
+      "evidence": {
+        "type": "orphan",
+        "truth": null,
+        "path": ["Zephyr-9000"]
+      }
+    },
+    {
+      "cid": "c4",
+      "kind": "relational",
+      "text": "Nyxa-7B was developed by Aether Labs.",
+      "status": "UNGROUNDED",
+      "cluster_flag": true,
+      "grounding_ratio": 0.0,
+      "dist_to_core": null,
+      "evidence": {
+        "type": "fabricated_cluster",
+        "truth": null,
+        "path": ["Nyxa-7B", "developed_by", "Aether Labs"]
+      }
+    },
+    {
+      "cid": "c5",
+      "kind": "relational",
+      "text": "Nyxa-7B reached state of the art on GLUE-X.",
+      "status": "UNGROUNDED",
+      "cluster_flag": true,
+      "grounding_ratio": 0.0,
+      "dist_to_core": null,
+      "evidence": {
+        "type": "fabricated_cluster",
+        "truth": null,
+        "path": ["Nyxa-7B", "sota_on", "GLUE-X"]
+      }
+    },
+    {
+      "cid": "c6",
+      "kind": "relational",
+      "text": "The GLUE-X benchmark was authored by J. Fictus.",
+      "status": "UNGROUNDED",
+      "cluster_flag": true,
+      "grounding_ratio": 0.0,
+      "dist_to_core": null,
+      "evidence": {
+        "type": "fabricated_cluster",
+        "truth": null,
+        "path": ["GLUE-X", "authored_by", "J. Fictus"]
+      }
+    }
+  ],
+  "graph": {
+    "nodes": [
+      { "id": "ent:claude", "label": "Claude", "kind": "entity", "color": "green" },
+      { "id": "ent:anthropic", "label": "Anthropic", "kind": "entity", "color": "green" },
+      { "id": "ent:gpt4", "label": "GPT-4", "kind": "entity", "color": "green" },
+      { "id": "ent:openai", "label": "OpenAI", "kind": "entity", "color": "green" },
+      { "id": "ent:mmlu", "label": "MMLU", "kind": "entity", "color": "green" },
+      { "id": "claim:c1", "label": "Claude → developed_by → Anthropic", "kind": "claim", "color": "green" },
+      { "id": "claim:c2", "label": "GPT-4 → developed_by → Google", "kind": "claim", "color": "red" },
+      { "id": "ent:google", "label": "Google", "kind": "entity", "color": "red" },
+      { "id": "claim:c3", "label": "Zephyr-9000 is an LLM", "kind": "claim", "color": "gray" },
+      { "id": "ent:zephyr", "label": "Zephyr-9000", "kind": "entity", "color": "gray" },
+      { "id": "claim:c4", "label": "Nyxa-7B → developed_by → Aether Labs", "kind": "claim", "color": "orange" },
+      { "id": "claim:c5", "label": "Nyxa-7B → sota_on → GLUE-X", "kind": "claim", "color": "orange" },
+      { "id": "claim:c6", "label": "GLUE-X → authored_by → J. Fictus", "kind": "claim", "color": "orange" },
+      { "id": "ent:nyxa", "label": "Nyxa-7B", "kind": "entity", "color": "orange" },
+      { "id": "ent:aether", "label": "Aether Labs", "kind": "entity", "color": "orange" },
+      { "id": "ent:gluex", "label": "GLUE-X", "kind": "entity", "color": "orange" },
+      { "id": "ent:fictus", "label": "J. Fictus", "kind": "entity", "color": "orange" }
+    ],
+    "edges": [
+      { "src": "ent:claude", "dst": "claim:c1", "rel": "subject", "status": "supported" },
+      { "src": "claim:c1", "dst": "ent:anthropic", "rel": "developed_by", "status": "supported" },
+      { "src": "ent:claude", "dst": "ent:mmlu", "rel": "evaluated_on", "status": "supported" },
+      { "src": "ent:gpt4", "dst": "ent:mmlu", "rel": "evaluated_on", "status": "supported" },
+      { "src": "ent:gpt4", "dst": "ent:openai", "rel": "developed_by", "status": "supported" },
+      { "src": "ent:gpt4", "dst": "claim:c2", "rel": "subject", "status": "contradicted" },
+      { "src": "claim:c2", "dst": "ent:google", "rel": "developed_by", "status": "contradicted" },
+      { "src": "ent:zephyr", "dst": "claim:c3", "rel": "subject", "status": "ungrounded" },
+      { "src": "ent:nyxa", "dst": "claim:c4", "rel": "subject", "status": "ungrounded" },
+      { "src": "claim:c4", "dst": "ent:aether", "rel": "developed_by", "status": "ungrounded" },
+      { "src": "ent:nyxa", "dst": "claim:c5", "rel": "subject", "status": "ungrounded" },
+      { "src": "claim:c5", "dst": "ent:gluex", "rel": "sota_on", "status": "ungrounded" },
+      { "src": "ent:gluex", "dst": "claim:c6", "rel": "subject", "status": "ungrounded" },
+      { "src": "claim:c6", "dst": "ent:fictus", "rel": "authored_by", "status": "ungrounded" }
+    ]
+  }
+}
