@@ -42,23 +42,31 @@ _STUB_DEFAULT_BALANCE = 100
 _STUB_BROKE_USERS = {"u_nocredit", "u_broke"}
 
 
-def _auth_headers() -> dict[str, str]:
-    """Service-role auth for Butterbase fns. bb_sk_ never appears in logs."""
+def _auth_headers(bearer: str | None = None) -> dict[str, str]:
+    """Auth headers for a Butterbase fn call.
+
+    The app's fn HTTP triggers are `auth: required` and REJECT the service
+    `bb_sk_` key (401 AUTH_REQUIRED) — they want an end-user JWT. So when the
+    caller forwards the end-user's `bearer` token (the normal /verify path), we
+    send THAT; the fn then credits `ctx.user.id` (unspoofable). We fall back to
+    the service key only for service-role fns that accept it. Tokens never log.
+    """
     headers = {"Content-Type": "application/json"}
+    if bearer:
+        headers["Authorization"] = f"Bearer {bearer}"  # end-user JWT (auth:required fns)
+        return headers
     key = os.environ.get("BUTTERBASE_API_KEY")
     if key:
-        # Send both spellings; the fn honours whichever it checks. Pin the real
-        # one at integration (CHECKLIST §f) and drop the other if desired.
         headers["Authorization"] = f"Bearer {key}"
         headers["x-butterbase-key"] = key
     return headers
 
 
-def _post_json(url: str, body: dict[str, Any], *, timeout: int = 30) -> dict[str, Any]:
+def _post_json(url: str, body: dict[str, Any], *, bearer: str | None = None, timeout: int = 30) -> dict[str, Any]:
     request = urllib.request.Request(
         url,
         data=json.dumps(body).encode("utf-8"),
-        headers=_auth_headers(),
+        headers=_auth_headers(bearer),
         method="POST",
     )
     with urllib.request.urlopen(request, timeout=timeout) as response:  # pragma: no cover - needs live backend
@@ -67,16 +75,29 @@ def _post_json(url: str, body: dict[str, Any], *, timeout: int = 30) -> dict[str
 
 
 # --- credit gate ---------------------------------------------------------------
-def consume_credit(user_id: str, job_id: str) -> dict[str, Any]:
-    """Consume one credit for `user_id` (contracts §4.5 `consume_credit`).
+def consume_credit(user_id: str, job_id: str, bearer: str | None = None) -> dict[str, Any]:
+    """Consume one credit for the caller (contracts §4.5 `consume_credit`).
 
     Returns {"ok": bool, "balance": int}. Real backend when CONSUME_CREDIT_URL is
-    set; otherwise an in-memory stub so the chain runs offline.
+    set (POST with the end-user `bearer` JWT → fn debits `ctx.user.id`); otherwise
+    an in-memory stub so the chain runs offline.
+
+    FAIL-OPEN: a flaky / unauthenticated credit backend (network error, 401/500)
+    must never break a live verify. On any backend EXCEPTION we log and return
+    ok:true (degraded). An explicit HTTP-200 `{"ok": false}` (real zero balance)
+    is honoured — that is the intended "insufficient credits" demo path.
     """
     url = os.environ.get("CONSUME_CREDIT_URL")
     if url:
-        result = _post_json(url, {"user_id": user_id, "job_id": job_id})
-        return {"ok": bool(result.get("ok")), "balance": int(result.get("balance", 0))}
+        try:
+            result = _post_json(url, {"user_id": user_id, "job_id": job_id}, bearer=bearer)
+            return {"ok": bool(result.get("ok")), "balance": int(result.get("balance", 0))}
+        except Exception as exc:  # pragma: no cover - needs live backend
+            log.warning(
+                "consume_credit backend error for user=%s job=%s (%s); FAILING OPEN",
+                user_id, job_id, exc,
+            )
+            return {"ok": True, "balance": -1, "degraded": True}
     # offline stub
     if user_id in _STUB_BROKE_USERS:
         return {"ok": False, "balance": 0}

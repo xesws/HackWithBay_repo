@@ -35,7 +35,7 @@ from pathlib import Path
 from typing import Any, Optional
 from uuid import uuid4
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Header
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
@@ -168,10 +168,16 @@ async def _run_via_rocketride(job_id: str, user_id: str, text: str) -> Optional[
 
 # --- route ---------------------------------------------------------------------
 @router.post("/verify")
-async def verify(req: VerifyRequest) -> JSONResponse:
+async def verify(req: VerifyRequest, authorization: Optional[str] = Header(default=None)) -> JSONResponse:
     job_id = req.job_id or str(uuid4())  # §4.1 job_id is uuid4 (v1.1, decisions #1)
 
-    gate = consume_credit(req.user_id, job_id)  # §4.5
+    # Forward the end-user JWT to the credit fn (its trigger is auth:required and
+    # rejects the service key); the fn then debits ctx.user.id (unspoofable).
+    bearer = None
+    if authorization and authorization.lower().startswith("bearer "):
+        bearer = authorization.split(" ", 1)[1].strip()
+
+    gate = consume_credit(req.user_id, job_id, bearer=bearer)  # §4.5
     if not gate.get("ok"):
         return JSONResponse({"error": "insufficient_credits", "balance": gate.get("balance", 0)})
 

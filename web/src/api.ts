@@ -10,9 +10,15 @@ export type Verdict = typeof sample;
 // constellation renders immediately.
 export async function fetchVerdict(text?: string, userId?: string): Promise<Verdict> {
   if (!text || !text.trim()) return sample as Verdict;
+  // Forward the end-user JWT so the server-side credit fn (auth:required) can
+  // debit ctx.user.id. The bb_sk_ service key is NEVER in the browser (§4.7).
+  const token = getToken();
   const r = await fetch(VERIFY_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
     body: JSON.stringify({ user_id: userId ?? "anonymous", text }),
   });
   if (!r.ok) throw new Error(`verify failed (${r.status})`);
