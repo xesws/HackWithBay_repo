@@ -255,7 +255,10 @@ def score_job(request: ScoreRequest, ref: ReferenceGraph) -> ScoreResponse:
 
     # ---- Layer 2: WCC + dist_to_core (union-find + BFS) ----------------
     anchors = {n for n in job_nodes if n.startswith("ent:")}
-    components = ReferenceGraph.connected_components(job_nodes, wcc_edges)
+    # Instance dispatch: Neo4jReference overrides this to run WCC on live GDS
+    # (falling back to union-find as "hybrid"); InMemoryReference inherits the
+    # base static union-find unchanged.
+    components = ref.connected_components(job_nodes, wcc_edges)
     comp_of: dict[str, int] = {}
     comp_has_anchor: dict[int, bool] = {}
     for idx, comp in enumerate(components):

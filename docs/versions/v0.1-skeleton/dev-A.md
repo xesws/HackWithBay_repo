@@ -94,3 +94,82 @@ Track D 的 alias 表覆盖完整，故未出现预想中的 doc E 别名欠配�
 - A4（Neo4jReference 实装 + LOAD CSV）是 pod territory，未做（护栏内 gated）。stub 已就位、接口对齐。
 
 下一步: 等编排指令；A4 待 pod 放行。
+
+---
+
+## Phase 2 · A4 (Neo4j + GDS 实装) + A2 sanity — dev-A（POD-LOCK 持有者）
+
+**落地 tier = ① 真 GDS**（layer-1 走 live Neo4j Cypher MATCH，WCC/cluster 走 live GDS）。
+非 hybrid、非 in-memory。`/health` 报 `"backend":"neo4j","tier":"gds"`。
+
+### A4.1 · 载图入 Neo4j + 验证
+新增 `infra/load_ref.cypher`（constraint + LOAD CSV，DESIGN §2.3 原样）与
+`infra/load_ref.py`（跑 cypher + 校验 + GDS 自检）。实跑:
+```
+$ .venv/bin/python infra/load_ref.py
+entities        = 161   (expect 161)
+facts           = 332   (expect 332)
+gds.version     = 2.13.8
+functional_rels = ['developed_by', 'released_in']
+wcc components  = 14
+orphan entities = 13
+LOAD OK
+```
+- `MATCH (e:Entity) RETURN count(e)` → **161** ✓
+- `MATCH ()-[f:FACT]->() RETURN count(f)` → **332** ✓
+- `CALL gds.version()` → **2.13.8** ✓（并在参考图上真跑了一次 `gds.wcc.stream`：14 个 WCC 分量、13 个孤儿实体，用完 drop）
+- `is_functional` 语义与 CSV 后端一致：仅 `developed_by`/`released_in` 为 functional（其余行 functional=false）。
+
+### A4.2 · `scorer/reference_neo4j.py` 实装（同一 `ReferenceGraph` Protocol）
+- layer-1 全部 **live Cypher MATCH over bolt**：`resolve`（`$s = e.name OR $s IN e.aliases`，
+  别名 `|` 拆分已在 load 时落成 list 属性，语义等价 `build_name_index`）、`facts_for`、
+  `attr_of`（`e[$attr]` 动态属性，空串→None）、`canonical_name`/`entity_type`/`fact_pairs_among`。
+  `is_functional` 用一次性缓存的 functional-rel 集合（DESIGN §2.3 认可的 "cached map loaded once"）。
+- WCC：override 实例方法 `connected_components` → **per-request GDS 投影**：把每次 /score 的 claim 图
+  物化成 gid 命名空间的临时 `:_JobNode`，`gds.graph.project.cypher` 投影（无向）→ `gds.wcc.stream`
+  → **drop 投影 + DETACH DELETE 临时节点**。参考图 `:Entity/:FACT` 全程不可变。
+  任一步 GDS 异常 → 静默降级为 union-find（并把该次及后续标记为 hybrid），保证判定永不翻车。
+- `scorer/scoring.py` 仅改 1 行：`ReferenceGraph.connected_components(...)` → `ref.connected_components(...)`
+  （实例派发）。InMemory 继承基类 @staticmethod，行为不变（已回归验证）。
+- `scorer/app.py:get_reference()` 改为 **auto**（默认）：Neo4j 可达即用 `Neo4jReference`；
+  仅当 pod 不可达才降级 in-memory（emergency，非可交付态）。`neo4j`/`memory` 可强制。
+
+投影/临时节点清洁性：跑完 5 篇 benchmark + A2 smoke 后，`Entity=161 FACT=332`（不变），
+`_JobNode=0`、`gds.graph.list()=[]`。零泄漏。
+
+### 验证 · Neo4j 后端全量 benchmark（活服务，非 mock）
+```
+$ SCORER_REFERENCE_BACKEND=auto .venv/bin/python -m uvicorn scorer.app:app --host 127.0.0.1 --port 8010
+$ curl -s http://127.0.0.1:8010/health
+{"status":"ok","reference":{"backend":"neo4j","tier":"gds","entities":161,"facts":332,
+ "functional_rels":["developed_by","released_in"],"gds_version":"2.13.8"}}
+$ .venv/bin/python eval/benchmark_runner.py --scorer-url http://127.0.0.1:8010
+doc A: sent 10 claims, expected_matches=10/10
+doc B: sent 27 claims, expected_matches=27/27
+doc C: sent 10 claims, expected_matches=10/10
+doc D: sent 6 claims, expected_matches=6/6
+doc E: sent 10 claims, expected_matches=10/10
+overall expected_matches=63/63
+```
+**Neo4j+GDS 后端 63/63，与 in-memory 基线完全一致。** 验后 kill 服务。
+
+### A2 · 三判定 smoke（Neo4j 后端，`bolt://localhost:7687`）
+```
+s1  GPT-4        --developed_by--> OpenAI          → SUPPORTED   (truth=OpenAI, path 全)
+s2  Claude 3 Opus--developed_by--> Google          → CONTRADICTED(functional 冲突; evidence.truth=Anthropic,
+                                                      path=[Claude 3 Opus, developed_by, Anthropic])
+s3  Nebula-X9    --developed_by--> Fictitious Labs → UNGROUNDED  (cluster_flag=true, WCC 孤儿, orange)
+```
+doc_score=0.5，红边/绿核/orange 孤儿在 graph payload 中齐备。三判定符合预期。
+
+### 启动生产 scorer（编排者用；本 agent 不跑持久 :8888）
+```
+SCORER_REFERENCE_BACKEND=auto \
+  /workspace/HackWithBay/HackWithBay_repo/.venv/bin/python -m uvicorn scorer.app:app \
+  --host 0.0.0.0 --port 8888
+```
+默认 auto → Neo4j 可达即为 **tier=gds** 后端（layer-1 live Cypher + GDS WCC）。
+需强制可加 `SCORER_REFERENCE_BACKEND=neo4j`（不可达即 fail loud）。
+
+坑/说明：`gds.graph.project.cypher` 在 GDS 2.13 有 deprecation warning（功能正常，仅告警）；
+后续可迁到新的 `gds.graph.project` 聚合式投影，非阻塞。

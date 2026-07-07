@@ -1,17 +1,22 @@
 """FastAPI scorer service (contracts.md §4.3).
 
   POST /score           §4.1 request -> §4.2 verdict (synchronous, <= 60s)
-  POST /admin/load_ref  reload the reference graph from CSV (humans only)
+  POST /admin/load_ref  reload the reference graph (humans only)
   GET  /health          liveness + reference stats
 
-`get_reference()` is the backend factory. Today it returns `InMemoryReference`
-(CSV, no database). A `SCORER_REFERENCE_BACKEND=neo4j` env hook is left in place
-so a future `Neo4jReference` can be dropped in without touching the scorer.
+`get_reference()` is the backend factory. `SCORER_REFERENCE_BACKEND` selects it:
+
+  * ``auto`` (default) — use the live `Neo4jReference` (bolt + GDS) when Neo4j is
+    reachable; only if it is NOT reachable fall back to the in-memory CSV backend
+    (emergency demo tier — NOT an acceptable submitted state).
+  * ``neo4j`` — force Neo4j; raise loudly if the pod is unreachable.
+  * ``memory`` — force the in-memory CSV backend (tests / emergency).
 """
 
 from __future__ import annotations
 
 import os
+import sys
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -24,13 +29,28 @@ _reference: ReferenceGraph | None = None
 
 
 def _build_reference() -> ReferenceGraph:
-    backend = os.environ.get("SCORER_REFERENCE_BACKEND", "memory").lower()
+    backend = os.environ.get("SCORER_REFERENCE_BACKEND", "auto").lower()
+
+    if backend == "memory":
+        return InMemoryReference.from_csv()
+
     if backend == "neo4j":
-        # Env hook only — the GDS-backed backend is a documented TODO (A4).
+        from .reference_neo4j import Neo4jReference
+
+        return Neo4jReference.from_env()  # raises if the pod is unreachable
+
+    # auto: prefer live Neo4j; degrade to in-memory ONLY if it is unreachable.
+    try:
         from .reference_neo4j import Neo4jReference
 
         return Neo4jReference.from_env()
-    return InMemoryReference.from_csv()
+    except Exception as exc:  # pragma: no cover - emergency demo tier
+        print(
+            f"[scorer] WARNING: Neo4j backend unavailable ({exc!r}); "
+            "falling back to EMERGENCY in-memory CSV backend.",
+            file=sys.stderr,
+        )
+        return InMemoryReference.from_csv()
 
 
 def get_reference() -> ReferenceGraph:
