@@ -1,9 +1,8 @@
-OPS | v0.1 | Phase2: A ✅ (scorer live 公网, real Neo4j+GDS); B 并行预写 /verify+.pipe+B3-real; 待整合 e2e | 阻塞: 无 | 更新 20:53
-OPS | 契约 v1.1 (decisions #1): job_id uuid4; §4.5 表对齐 live (uuid/ts/verdict_json); 不 drop 表 | 更新 20:37
-A | v0.1 | A2+A4 ✅ tier=gds; scorer 活线 https://ohld8gp5nmkcu7-8888.proxy.runpod.net (/score real Neo4j+GDS, bench 63/63); POD-LOCK 已释放 | 阻塞: 无 | 更新 20:53
-B | v0.1 | B2+B3-stub 已合; Phase2 预写中(worktree): .pipe / verify / B3-real / checklist; 待整合 | 阻塞: LLM key 空 → 记分牌 LLM-judge 基线残废(NEEDS-HUMAN) | 更新 20:53
-C | v0.1 | C1-C3 已合; SPA 活线 https://graphjudge.butterbase.dev; credit 流已验证 | 阻塞: 无 | 更新 20:37
-D | v0.1 | D1-D4 done; benchmark_runner job_id→uuid4 (decisions #1) | 阻塞: 无 | 更新 18:56
-SETUP | §2 ✅ + 交接: SCORER_URL=https://ohld8gp5nmkcu7-8888.proxy.runpod.net (8888 proxy 已验证); scorer 绑 0.0.0.0:8888 | 13:09
-OPS | Shape 2 已裁决: pipeline 经 scorer /verify 内嵌 SDK 触发, 全系统单公网口 | 13:09
-OPS | 属地豁免: /verify 归 Track B 实现, 允许 B 在 /scorer 的 app 挂载 router | 13:09
+OPS | v0.1 | Phase2 e2e ✅ LIVE: SPA→/verify→gemini 抽取→real Neo4j+GDS 打分→星座图渲染; scoreboard 进行中 | 阻塞: 无 | 更新 21:23
+OPS | 契约 v1.1 (decisions #1): job_id uuid4; §4.5 表对齐 live; 不 drop 表。LLM 一律 OpenRouter/google-gemini-3.5-flash | 更新 21:23
+A | v0.1 | A2+A4 ✅ tier=gds; scorer 活线 :8888 (/score + /verify, real Neo4j+GDS, CORS, bench 63/63) | 阻塞: 无 | 更新 21:23
+B | v0.1 | /verify(Shape2) 挂载 + B3-real + OpenRouter 抽取(30s超时+regex兜底) 已整合上线; credit gate=stub(可选接线) | 阻塞: 无 | 更新 21:23
+C | v0.1 | SPA 重部署 https://graphjudge.butterbase.dev: paste→Verify→星座图 已接 /verify(§4.4) | 阻塞: 无 | 更新 21:23
+D | v0.1 | D1-D4 done; scoreboard(graph-judge vs LLM-judge) worker 进行中 | 阻塞: 无 | 更新 21:23
+SETUP | §2 ✅ + 交接: SCORER_URL=https://ohld8gp5nmkcu7-8888.proxy.runpod.net; scorer 绑 0.0.0.0:8888 | 13:09
+OPS | Shape 2 已裁决 + /verify 属地豁免(B 在 scorer app 挂 router) | 13:09
