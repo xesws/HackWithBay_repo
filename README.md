@@ -17,6 +17,25 @@ GraphJudge turns prose into a render-ready fact constellation:
 
 The core claim is that relationship structure is useful for evaluation. A fluent but fake cluster may look plausible in text, but in a graph it becomes a disconnected component with no trusted anchor.
 
+## Why This Isn't Just Graph RAG
+
+The most common question is: "why not just build a Graph RAG that retrieves the subgraph and checks the claim?" GraphJudge and Graph RAG operate on opposite sides of generation and answer different questions.
+
+- **Graph RAG runs upstream of generation.** It retrieves context and feeds it into an LLM so the LLM *generates* a better, grounded answer. The LLM is still the author and still the judge.
+- **GraphJudge runs downstream of generation.** It takes already-generated text and asks whether it is true. It is a verifier, a gate, and an eval layer — not a generator.
+
+Four differences make this more than a rebrand of retrieval:
+
+1. **The verdict is made by the graph, not by an LLM.** `born_in` is a functional (single-valued) relationship; the reference graph pins `Della -> 1990`; a claim of `1992` is `CONTRADICTED` by a deterministic Cypher/arithmetic check. An LLM is used only to *parse* prose into structured claims, never to *decide* truth. We removed the LLM from exactly the step where a checker would otherwise hallucinate its own verdict.
+
+2. **Absence is a first-class signal, and this is where RAG breaks.** Retrieve `Cindrel Motive Office` from a fabricated cluster and you get nothing back. To a RAG pipeline "retrieved nothing" is a null, so the LLM falls back to its parametric prior and guesses — the checker starts hallucinating. GraphJudge instead reads the *shape* of the miss: a WCC component with zero trusted anchors is a fabricated cluster (orange). The topology of the absence is the evidence.
+
+3. **Deterministic, reproducible, auditable.** The same input yields the same verdict every time, because the reference graph is a fixed, inspectable source of truth rather than model weights. Each verdict carries a graph path that *is* the computation, not a post-hoc citation an LLM might contradict. The core judgment path runs on Cypher + GDS + arithmetic, so there is no per-claim LLM token cost or latency on the decision.
+
+4. **We sit on top of any generator, including a Graph RAG one.** GraphJudge is not a competitor to RAG; it is the quality gate a RAG system should pass its own output through before showing a user. The more you trust a generator, the more you need a judge that does not itself rely on an LLM.
+
+One-line framing: **Graph RAG uses the graph to help an LLM generate; GraphJudge uses the graph to judge what an LLM generated — and the judgment is made by graph topology, not by a model.**
+
 ## HackwithBay 3.0 Requirement Fit
 
 | Requirement | How GraphJudge Uses It |
