@@ -1,0 +1,25 @@
+{
+  "job_id": "bench_A",
+  "claims": [
+    {"cid": "c1", "kind": "relational", "text": "Gemini Pro was developed by Google DeepMind.",
+     "subject": "Gemini Pro", "rel": "developed_by", "object": "Google DeepMind"},
+    {"cid": "c2", "kind": "relational", "text": "GPT-4 was evaluated on MMLU.",
+     "subject": "GPT-4", "rel": "evaluated_on", "object": "MMLU"},
+    {"cid": "c3", "kind": "relational", "text": "Claude Sonnet 4 was developed by Anthropic.",
+     "subject": "Claude Sonnet 4", "rel": "developed_by", "object": "Anthropic"},
+    {"cid": "c4", "kind": "relational", "text": "Gemini 2.5 Flash was developed by Google DeepMind.",
+     "subject": "Gemini 2.5 Flash", "rel": "developed_by", "object": "Google DeepMind"},
+    {"cid": "c5", "kind": "relational", "text": "Aya 23 35B was evaluated on MMLU.",
+     "subject": "Aya 23 35B", "rel": "evaluated_on", "object": "MMLU"},
+    {"cid": "c6", "kind": "relational", "text": "o1-preview was released in 2024.",
+     "subject": "o1-preview", "rel": "released_in", "object": "2024"},
+    {"cid": "c7", "kind": "relational", "text": "Llama 3 8B was released in 2024.",
+     "subject": "Llama 3 8B", "rel": "released_in", "object": "2024"},
+    {"cid": "c8", "kind": "relational", "text": "Gemma 2 9B was evaluated on GSM8K.",
+     "subject": "Gemma 2 9B", "rel": "evaluated_on", "object": "GSM8K"},
+    {"cid": "c9", "kind": "relational", "text": "o1-preview was developed by OpenAI.",
+     "subject": "o1-preview", "rel": "developed_by", "object": "OpenAI"},
+    {"cid": "c10", "kind": "relational", "text": "DeepSeek-R1 was developed by DeepSeek.",
+     "subject": "DeepSeek-R1", "rel": "developed_by", "object": "DeepSeek"}
+  ]
+}
