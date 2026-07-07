@@ -84,3 +84,47 @@ GATEWAY_API_KEY=... .venv/bin/python -m pipeline.extract_claims --doc all --mode
 
 坑/说明: 未接 Track A scorer / Track C credit(SEAM 已就位, 离线用 stub)。POD 全程未碰。
 下一步(非本轮): B1 (.pipe 上 pod) 与 B3-real(接真 SCORER_URL)。
+
+## [Phase-2 PRE-WRITE] B1 .pipe + B2-verify /verify (Shape 2) + B3-real — done (设计+代码, 未上 pod)
+分支: `track-b-phase2`(自 main 起, worktree `wt-b`)。属地 `/pipeline` + 新增 `scorer/verify.py`(territory 豁免:
+自包含 APIRouter, 不改 `scorer/app.py`)。POD/部署全程未碰。
+
+做了(4 件套):
+- `pipeline/graphjudge.pipe`: RocketRide PipelineConfig(`{"pipeline":{...}}` wrapper, `use()` 自动 unwrap)。
+  6 组件 `webhook_in`(源) → `credit_gate`(python) → `extract_claims`(python) → `score`(python) →
+  `persist`(python) → `respond`(response)。lanes: credit_gate `ok`/`denied`(不足短路到 respond)。
+  config 内标注每步的 `entry`(module:callable)、`args`(`$.field` 取字段)、`env`、LLM/HTTP seam。
+- `scorer/verify.py`: `POST /verify`(§4.4)。解析 body → 缺 job_id 则 `uuid4()`(v1.1) → `consume_credit`
+  (不足→`{"error":"insufficient_credits","balance":0}`) → 跑管线 → `persist_result`(best-effort) → 透传 §4.2。
+  **主路径** `_run_via_rocketride`(SDK, `PIPELINE_USE_ROCKETRIDE=1` 才启, `use(filepath=.pipe)`+`send`);
+  **文档化 direct fallback** `_run_direct`(复用 Track A 真 `scorer.scoring.score_job` over CSV 参考图, **非 mock**),
+  任何 SDK 失败/未启用即用它 → /verify 永远返回合法 §4.2。`get_reference` 延迟 import 破除 app↔verify 循环。
+  模块 docstring 内含精确 include 两行。
+- `pipeline/credits.py`(新, 单一真相源): `consume_credit(user_id,job_id)` + `persist_result(job_id,user_id,verdict)`。
+  env-gated: `CONSUME_CREDIT_URL`/`PERSIST_RESULT_URL` 置位→真 Butterbase HTTP(bb_sk_ 双 header, 不记日志);
+  未置位→离线 stub/no-op。webhook.py 与 verify.py 共用。
+- `pipeline/webhook.py`(B3-real): credit_gate seam → `pipeline.credits.consume_credit`(真/离线自动降级);
+  scorer seam 仍 `POST {SCORER_URL}/score`(真)否则 mock。healthz 增 `credit_backend`。
+- `pipeline/PHASE2_CHECKLIST.md`: pod 放锁后 (a)-(f) 有序步骤(改 app.py 两行 / .env / 重启 8888 /
+  curl /verify 断言 §4.2 / SPA 指向 /verify 重建 / consume_credit+persist 接线)。
+
+验证(实际命令 + 实际输出, 全部离线, 用绝对路径 venv):
+- `py_compile scorer/verify.py pipeline/webhook.py pipeline/credits.py` → OK。
+- `.pipe` `json.load`: OK; source=`webhook_in`∈ids; 6 组件; 所有 `input.from` 边可解析; PipelineConfig 必需字段齐。
+- `claims_A.json` vs `claims.schema.json` → OK。
+- `POST /verify`(TestClient, 无 job_id, body=Claude→Google/GPT-4→MMLU/Llama3→8B):
+  HTTP 200 | 过 `verdict.schema.json` | job_id 为真 uuid4 | doc_score=**0.6667** |
+  statuses=`[(c1,CONTRADICTED),(c2,SUPPORTED),(c3,SUPPORTED)]`(Claude developed_by Google 正确判 CONTRADICTED,
+  = Track A 真打分, 非 mock) | nodes=8 edges=6。
+- `POST /verify` u_nocredit → `{"error":"insufficient_credits","balance":0}`(精确匹配 §4.4)。
+- `/verify/healthz` → `{ok:true, pipe:'graphjudge.pipe', rocketride:false, credit_backend:'stub', persist_backend:'noop'}`。
+- webhook(B3-real)离线: `/healthz`=`{ok, scorer:'mock', credit_backend:'stub'}`; happy HTTP 200;
+  u_broke → `{"error":"insufficient_credits","balance":0}`。
+
+不确定/需集成时定案(见 CHECKLIST §d.1/§f):
+- `.pipe` 自定义 Python 步的 `provider` 串(暂猜 `"python"`)与 `respond` 的 PIPELINE_RESULT lane 形状——
+  按 live runtime `client.get_services()` 核对; `_extract_verdict` 已写成形状容错, 且 direct 路径不依赖二者。
+- `consume_credit`/`persist_result` 的 Butterbase fn URL 与 service auth header 具体拼写(bb_sk_ 双 header 待收敛);
+  `backend/functions/` 目前无 persist fn —— Track C 补 `persist_result` fn 或 orchestrator 用 insert_row, 见 §f。
+- rocketride Cloud 豁免 receipt(decisions #0)待人工粘贴。
+下一步(pod 放锁后): 按 PHASE2_CHECKLIST 执行 (a)-(f)。
