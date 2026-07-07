@@ -145,12 +145,22 @@ def extract_claims(job_id: str, text: str, model: Optional[Callable[[str], str]]
     """
     if model is None:
         model = default_model()
-    raw = model(text)
-    parsed = json.loads(raw)
-    payload = {"job_id": job_id, "claims": parsed.get("claims", parsed if isinstance(parsed, list) else [])}
-    if validate:
-        jsonschema.validate(payload, load_schema())
-    return payload
+
+    def _run(m: Callable[[str], str]) -> dict[str, Any]:
+        parsed = json.loads(m(text))
+        payload = {"job_id": job_id,
+                   "claims": parsed.get("claims", parsed if isinstance(parsed, list) else [])}
+        if validate:
+            jsonschema.validate(payload, load_schema())
+        return payload
+
+    try:
+        return _run(model)
+    except Exception:
+        if model is call_model:  # already the deterministic extractor; nothing to fall back to
+            raise
+        # robust fallback: LLM path failed (timeout / API error / bad output) -> regex.
+        return _run(call_model)
 
 
 # --- scoring vs ledger ---------------------------------------------------------

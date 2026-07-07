@@ -23,7 +23,7 @@ import urllib.request
 from typing import Any
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-DEFAULT_MODEL = "z-ai/glm-5.2"
+DEFAULT_MODEL = "google/gemini-3.5-flash"
 
 
 def has_key() -> bool:
@@ -47,6 +47,7 @@ def openrouter_chat(
     *,
     temperature: float = 0.0,
     max_tokens: int | None = None,
+    timeout: float = 30.0,
     **kwargs: Any,
 ) -> str:
     """Send `messages` (OpenAI chat format) to OpenRouter; return the reply string.
@@ -68,7 +69,7 @@ def openrouter_chat(
         OpenAI = None  # fall through to urllib
 
     if OpenAI is not None:
-        client = OpenAI(base_url=OPENROUTER_BASE_URL, api_key=key)
+        client = OpenAI(base_url=OPENROUTER_BASE_URL, api_key=key, timeout=timeout)
         completion = client.chat.completions.create(**params)
         return completion.choices[0].message.content or ""
 
@@ -79,7 +80,7 @@ def openrouter_chat(
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(request, timeout=60) as response:  # pragma: no cover - needs key
+    with urllib.request.urlopen(request, timeout=timeout) as response:  # pragma: no cover - needs key
         body = json.loads(response.read().decode("utf-8"))
     return body["choices"][0]["message"]["content"] or ""
 
