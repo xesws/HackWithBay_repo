@@ -152,6 +152,25 @@ export default function App() {
   const [verdict, setVerdict] = useState<Verdict | null>(null);
   const [selected, setSelected] = useState<any>(null);
   const [balance, setBalance] = useState<number | null>(null);
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  async function verify() {
+    if (!text.trim() || !session) return;
+    setBusy(true);
+    setErr("");
+    try {
+      const v = await fetchVerdict(text, session.user.id);
+      setVerdict(v);
+      setSelected(null);
+      fetchBalance(session.user.id).then(setBalance).catch(() => {});
+    } catch (ex: any) {
+      setErr(ex?.message || "verify failed");
+    } finally {
+      setBusy(false);
+    }
+  }
 
   useEffect(() => {
     if (!session) return;
@@ -205,6 +224,22 @@ export default function App() {
           </span>
         )}
       </div>
+
+      <section style={{ padding: "0 20px 12px", display: "flex", flexDirection: "column", gap: 8 }}>
+        <textarea
+          placeholder="Paste an LLM answer about the AI industry (with planted errors), then Verify…"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          rows={3}
+          style={{ width: "100%", background: "#0f1117", color: "#e5e7eb", border: "1px solid #333", borderRadius: 8, padding: 10, fontFamily: "inherit", fontSize: 14, resize: "vertical", boxSizing: "border-box" }}
+        />
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <button className="primary" onClick={verify} disabled={busy || !text.trim()} style={{ width: "auto", padding: "8px 18px" }}>
+            {busy ? "scoring…" : "Verify"}
+          </button>
+          {err && <span className="err">{err}</span>}
+        </div>
+      </section>
 
       <main className="stage">
         <section className="graph-col">

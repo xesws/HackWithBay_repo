@@ -69,6 +69,10 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="GraphJudge Scorer", version="0.1", lifespan=lifespan)
+
+from fastapi.middleware.cors import CORSMiddleware  # browser SPA -> /verify is cross-origin
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+
 app.include_router(verify_router)  # Track B /verify (Shape 2, single public port)
 
 
