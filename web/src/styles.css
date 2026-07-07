@@ -416,6 +416,9 @@ button.ghost:hover { color: var(--text); border-color: var(--accent); background
 .status-ungrounded { background: rgba(148, 163, 184, 0.14); color: #cbd5e1; border-color: rgba(148, 163, 184, 0.36); }
 .badge.cluster { background: rgba(245, 158, 11, 0.14); color: #fcd34d; border-color: rgba(245, 158, 11, 0.42); }
 .badge.dim { background: transparent; color: var(--faint); }
+.node-summary { margin: -2px 0 14px; }
+.node-summary .muted { font-size: 13px; line-height: 1.55; }
+.node-badges { margin-bottom: 8px; }
 
 .ev-grid { display: grid; grid-template-columns: 52px 1fr; gap: 8px 12px; font-size: 13px; }
 .ev-key { color: var(--faint); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 2px; }

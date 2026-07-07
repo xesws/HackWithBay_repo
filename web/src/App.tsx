@@ -39,6 +39,24 @@ function cidOf(node: any): string | null {
   return id.startsWith("claim:") ? id.slice("claim:".length) : null;
 }
 
+function nodeStatus(node: any): { label: string; className: string; note: string } {
+  if (node?.kind === "entity") {
+    return {
+      label: "GROUNDED ENTITY",
+      className: "status-supported",
+      note: "This node is anchored in the reference graph. Verdicts below are claim-level.",
+    };
+  }
+  if (node?.kind === "mention") {
+    return {
+      label: node?.color === "orange" ? "FABRICATED CLUSTER" : "UNRESOLVED MENTION",
+      className: node?.color === "orange" ? "cluster" : "status-ungrounded",
+      note: "This surface form was not resolved to a trusted reference entity.",
+    };
+  }
+  return { label: "CLAIM", className: "dim", note: "This node represents one extracted claim." };
+}
+
 function LoginView({ onSession }: { onSession: (s: Session) => void }) {
   const [mode, setMode] = useState<"in" | "up">("in");
   const [email, setEmail] = useState("");
@@ -100,6 +118,7 @@ function EvidencePanel({ verdict, selected }: { verdict: Verdict; selected: any 
 
   const cid = cidOf(selected);
   const claim = cid ? claims.find((c) => c.cid === cid) : null;
+  const selectedNodeStatus = nodeStatus(selected);
 
   // For entity nodes, gather the claims that touch this entity via graph edges.
   let related: any[] = [];
@@ -125,9 +144,18 @@ function EvidencePanel({ verdict, selected }: { verdict: Verdict; selected: any 
 
       {claim && <ClaimEvidence claim={claim} />}
 
+      {!claim && (
+        <div className="node-summary">
+          <div className="badges node-badges">
+            <span className={`badge ${selectedNodeStatus.className}`}>{selectedNodeStatus.label}</span>
+          </div>
+          <p className="muted">{selectedNodeStatus.note}</p>
+        </div>
+      )}
+
       {!claim && related.length > 0 && (
         <>
-          <div className="section-label">Claims involving this entity</div>
+          <div className="section-label">Related claim verdicts</div>
           {related.map((c: any) => (
             <ClaimEvidence key={c.cid} claim={c} compact />
           ))}
