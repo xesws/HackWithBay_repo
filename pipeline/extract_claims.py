@@ -177,7 +177,12 @@ def extract_claims(job_id: str, text: str, model: Optional[Callable[[str], str]]
         return payload
 
     try:
-        return _run(model)
+        payload = _run(model)
+        if model is not call_model and not payload["claims"]:
+            fallback = _run(call_model)
+            if fallback["claims"]:
+                return fallback
+        return payload
     except Exception:
         if model is call_model:  # already the deterministic extractor; nothing to fall back to
             raise
